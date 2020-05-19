@@ -12,7 +12,6 @@
     hostlist: ipa
 
 - name: Configure IPA Servers
-  remote_user: svc-ansible
   become: true
   hosts: ipa
   vars_files:
@@ -59,7 +58,6 @@
 
 ###############################################################################
 - name: Configure IPA Master
-  remote_user: svc-ansible
   become: true
   hosts: ipa_master
   vars_files:
@@ -86,7 +84,6 @@
 
 ###############################################################################
 - name: Configure IPA Replicas
-  remote_user: svc-ansible
   become: true
   hosts: ipa_replica
   serial: 1
@@ -137,7 +134,6 @@
 ###############################################################################
 # Add prometheus exporter
 - name: Install Prometheus exporter
-  remote_user: svc-ansible
   become: true
   hosts: ipa
   vars_files:
