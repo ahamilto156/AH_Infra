@@ -40,7 +40,7 @@
 
 #Hosts for Leandon
 [infra]
-proxy.leandon.local ansible_ssh_user=ahamilto
+proxy.leandon.local
 dns.leandon.local ansible_ssh_user=ahamilto
 sat6.leandon.local ansible_ssh_user=ahamilto
 ansible.leandon.local ansible_ssh_user=ahamilto

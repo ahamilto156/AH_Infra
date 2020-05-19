@@ -1,6 +1,6 @@
 ---
 - name: System Hardening
-  remote_user: svc-ansible
+  # remote_user: svc-ansible
   become: true
   hosts: all
 
@@ -25,7 +25,7 @@
 
 
 - name: Extra System Hardening
-  remote_user: svc-ansible
+  # remote_user: svc-ansible
   become: true
   hosts: all
   tasks:
