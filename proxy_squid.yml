@@ -1,10 +1,39 @@
 ---
-- name: Configure Squid Proxy
-  hosts: proxy.leandon.local
+- name: System Hardening
+  become: true
+  hosts: all
   tasks:
-    - name: Harden Server
-      include_tasks: hardening.yml
+  - block:
+    - name: Apply CIS hardening via role Ansible-RHEL8-CIS-Benchmarks8
+      include_role:
+        name: Ansible-RHEL8-CIS-Benchmarks
+      tags:
+      - hardening
+      - cis
+      when: ansible_distribution_major_version == '8'
+
+    - name: Apply CIS hardening via role Ansible-RHEL7-CIS-Benchmarks
+      include_role:
+        name: Ansible-RHEL7-CIS-Benchmarks
+      tags:
+      - hardening
+      - cis
+      when: ansible_distribution_major_version == '7'
+    when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
+
+- name: Extra System Hardening
+  become: true
+  hosts: all
+  tasks:
+  - name: Apply additional hardening via role ansible-role-extra-hardening
+    include_role:
+      name: ansible-role-extra-hardening
+    tags:
+    - hardening
       
+- name: Configure Squid Proxy
+  hosts: all
+  tasks:
     - name: Configure proxy via role ansible-squid
       include_role:
         name: ansible-squid
