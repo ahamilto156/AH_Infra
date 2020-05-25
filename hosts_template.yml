@@ -52,25 +52,25 @@ all:
       children:
         naming:
           hosts:
-            dns.{{ Local_FQDN }}: {}
-            idm4.{{ Local_FQDN }}: {}
+            "dns.{{ Local_FQDN }}": {}
+            "idm4.{{ Local_FQDN }}": {}
           vars:
             motd_role: Naming Server
         provisioning:
           hosts:
-            sat6.{{ Local_FQDN }}: {}
-            foreman.{{ Local_FQDN }}: {}
-            ansible.{{ Local_FQDN }}: {}
+            "sat6.{{ Local_FQDN }}": {}
+            "foreman.{{ Local_FQDN }}": {}
+            "ansible.{{ Local_FQDN }}": {}
           vars:
             motd_role: Provisioning Server
 
     clients:
-      rhel:
+      Linux:
         children:
           hosts:
-            rhel8svr.{{ Local_FQDN }}: {}
-            rhel7svr.{{ Local_FQDN }}: {}
-            centos8.{{ Local_FQDN }}: {}
-            proxy.{{ Local_FQDN }}: {}
+            "rhel8svr.{{ Local_FQDN }}": {}
+            "rhel7svr.{{ Local_FQDN }}": {}
+            "centos8.{{ Local_FQDN }}": {}
+            "proxy.{{ Local_FQDN }}": {}
       vars:
         motd_role: Linux Server
