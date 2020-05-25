@@ -72,5 +72,5 @@ all:
             "rhel7svr.{{ Local_FQDN }}": {}
             "centos8.{{ Local_FQDN }}": {}
             "proxy.{{ Local_FQDN }}": {}
-      vars:
-        motd_role: Linux Server
+          vars:
+            motd_role: Linux Server
