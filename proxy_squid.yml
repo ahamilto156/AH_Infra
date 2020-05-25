@@ -1,7 +1,12 @@
 ---
 - name: Configure Squid Proxy
-  hosts: all
+  hosts: proxy.leandon.local
   tasks:
-    - name: Include ansible-squid
+    - name: Harden Server
+      include_tasks: hardening.yml
+      
+    - name: Configure proxy via role ansible-squid
       include_role:
         name: ansible-squid
+  tags:
+  - proxy

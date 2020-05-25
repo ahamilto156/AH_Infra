@@ -1,6 +1,5 @@
 ---
 - name: System Bootstrap
-  remote_user: svc-ansible
   become: true
   gather_facts: false
   hosts: all

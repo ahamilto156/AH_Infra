@@ -1,6 +1,5 @@
 ---
 - name: oVirt Host
-  remote_user: svc-ansible
   become: true
   hosts: ovirt
 
@@ -48,7 +47,6 @@
 ###############################################################################
 # Add prometheus exporter
 # - name: oVirt VDSM Prometheus exporter
-#   remote_user: svc-ansible
 #   become: true
 #   hosts: ovirt
 

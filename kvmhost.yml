@@ -1,6 +1,5 @@
 ---
 - name: KVM Host
-  remote_user: svc-ansible
   become: true
   hosts: kvm
 
