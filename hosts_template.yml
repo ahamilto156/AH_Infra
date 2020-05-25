@@ -1,6 +1,6 @@
 all:
   vars:
-    # NB: change all the Local_FQDN below to your doamin
+    # NB: change all the Local_FQDN below to your domain
     
     motd_system: Home
     motd_sys_env: LAB
@@ -67,6 +67,10 @@ all:
             "ansible.{{ Local_FQDN }}": {}
           vars:
             motd_role: Provisioning Server
+            cis_level_1_exclusions_extras: ['','']
+            cis_level_2_exclusions_extras: ['','']
+            cis_level_1_exclusions: ['{{ cis_level_1_exclusions }}','{{ cis_level_1_exclusions_extras }}']
+            cis_level_2_exclusions: ['{{ cis_level_2_exclusions }}','{{ cis_level_2_exclusions_extras }}']
 
     clients:
       hosts:
@@ -76,3 +80,7 @@ all:
         "proxy.{{ Local_FQDN }}": {}
       vars:
         motd_role: Linux Server
+        cis_level_1_exclusions_extras: ['','']
+        cis_level_2_exclusions_extras: ['','']
+        cis_level_1_exclusions: ['{{ cis_level_1_exclusions }}','{{ cis_level_1_exclusions_extras }}']
+        cis_level_2_exclusions: ['{{ cis_level_2_exclusions }}','{{ cis_level_2_exclusions_extras }}']
