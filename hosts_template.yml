@@ -1,6 +1,7 @@
 all:
   vars:
-    Local_FQDN: TBA
+    # NB: change all the Local_FQDN below to your doamin
+    
     motd_system: Home
     motd_sys_env: LAB
 
@@ -14,11 +15,9 @@ all:
       # 5.3.2   - PAM config
       # 6.1.1.  - Audit Sytem File Permissions
     cis_chrony_servers: |+
-      server ntp1.{{ Local_FQDN }} iburst
-      server ntp2.{{ Local_FQDN }} iburst
-      server ntp3.{{ Local_FQDN }} iburst
+      pool 2.rhel.pool.ntp.org iburst
     cis_ntp_clients: "{{ cis_chrony_servers }}"
-    cis_rsyslog_remote_loghost_address: syslog.{{ Local_FQDN }}
+    cis_rsyslog_remote_loghost_address: "syslog.{{ Local_FQDN }}"
     cis_local_login_warning_banner: |+
       ###############################################################
       #  All connections to this system are monitored and recorded  #
@@ -56,6 +55,11 @@ all:
             "idm4.{{ Local_FQDN }}": {}
           vars:
             motd_role: Naming Server
+            cis_level_1_exclusions_extras: ['','']
+            cis_level_2_exclusions_extras: ['','']
+            cis_level_1_exclusions: ['{{ cis_level_1_exclusions }}','{{ cis_level_1_exclusions_extras }}']
+            cis_level_2_exclusions: ['{{ cis_level_2_exclusions }}','{{ cis_level_2_exclusions_extras }}']
+            
         provisioning:
           hosts:
             "sat6.{{ Local_FQDN }}": {}
