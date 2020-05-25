@@ -1,6 +1,10 @@
+# NB: change all the Local_FQDN below to your domain
+
 all:
   vars:
-    # NB: change all the Local_FQDN below to your domain
+    # The following variables are the default for all servers. If a specific server requires specificification
+    #  you must redefined the variable underneath the host
+
     
     motd_system: Home
     motd_sys_env: LAB
@@ -51,36 +55,41 @@ all:
       children:
         naming:
           hosts:
-            "dns.{{ Local_FQDN }}": {}
-            "idm4.{{ Local_FQDN }}": {}
+            "dns.{{ Local_FQDN }}": {
+		      Dummy_Var1: '' }
+            "idm4.{{ Local_FQDN }}": {
+		      Dummy_Var1: '' }
           vars:
             motd_role: Naming Server
-            cis_level_1_exclusions_extras: ['','']
-            cis_level_2_exclusions_extras: ['','']
-            cis_level_1_exclusions: ['{{ cis_level_1_exclusions }}','{{ cis_level_1_exclusions_extras }}']
-            cis_level_2_exclusions: ['{{ cis_level_2_exclusions }}','{{ cis_level_2_exclusions_extras }}']
+            cis_level_1_exclusions: ['1.2.3','1.3.1','1.8','2.2.7','3.4.1','3.4.2','3.4.3','3.4.4','3.4.5','5.3.2']
+            cis_level_2_exclusions: ['6.1.1']
+
             
         provisioning:
           hosts:
-            "sat6.{{ Local_FQDN }}": {}
-            "foreman.{{ Local_FQDN }}": {}
-            "ansible.{{ Local_FQDN }}": {}
+            "sat6.{{ Local_FQDN }}": {
+		      Dummy_Var1: '' }
+            "foreman.{{ Local_FQDN }}": {
+		      Dummy_Var1: '' }
+            "ansible.{{ Local_FQDN }}": {
+		      Dummy_Var1: '' }
           vars:
             motd_role: Provisioning Server
-            cis_level_1_exclusions_extras: ['','']
-            cis_level_2_exclusions_extras: ['','']
-            cis_level_1_exclusions: ['{{ cis_level_1_exclusions }}','{{ cis_level_1_exclusions_extras }}']
-            cis_level_2_exclusions: ['{{ cis_level_2_exclusions }}','{{ cis_level_2_exclusions_extras }}']
+            cis_level_1_exclusions: ['1.2.3','1.3.1','1.8','2.2.7','3.4.1','3.4.2','3.4.3','3.4.4','3.4.5','5.3.2']
+            cis_level_2_exclusions: ['6.1.1']
 
     clients:
       hosts:
-        "rhel8svr.{{ Local_FQDN }}": {}
-        "rhel7svr.{{ Local_FQDN }}": {}
-        "centos8.{{ Local_FQDN }}": {}
-        "proxy.{{ Local_FQDN }}": {}
+        "rhel8svr.{{ Local_FQDN }}": {
+		      Dummy_Var1: '' }
+        "rhel7svr.{{ Local_FQDN }}": {
+		      Dummy_Var1: '' }
+        "centos8.{{ Local_FQDN }}": {
+		      Dummy_Var1: '' }
+        "proxy.{{ Local_FQDN }}":  {
+		      Dummy_Var1: '' }
+
       vars:
         motd_role: Linux Server
-        cis_level_1_exclusions_extras: ['','']
-        cis_level_2_exclusions_extras: ['','']
-        cis_level_1_exclusions: ['{{ cis_level_1_exclusions }}','{{ cis_level_1_exclusions_extras }}']
-        cis_level_2_exclusions: ['{{ cis_level_2_exclusions }}','{{ cis_level_2_exclusions_extras }}']
+        cis_level_1_exclusions: ['1.2.3','1.3.1','1.8','2.2.7','3.4.1','3.4.2','3.4.3','3.4.4','3.4.5','5.3.2']
+        cis_level_2_exclusions: ['6.1.1']
