@@ -52,6 +52,6 @@
       include_role:
         name: ansible-squid
   vars_files:
-    vars/proxy_squid_vars.yml      
+    roles/vars/proxy_squid_vars.yml      
   tags:
   - proxy
