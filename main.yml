@@ -23,6 +23,7 @@
 - import_playbook: weather.yml
 - import_playbook: automation.yml
 - import_playbook: adsb.yml
+- import_playbook: proxy_squid.yml
 
 
 # - import_playbook: workstation.yml
