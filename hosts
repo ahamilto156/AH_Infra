@@ -7,25 +7,22 @@ all:
 
     
     motd_system: Home
-    motd_sys_env: VMs
+    motd_sys_env: LAB
 
-    cis_level_1_exclusions: ['1.2.3','1.3.1','1.8','2.2.7','3.4.1','3.4.2','3.4.3','3.4.4','3.4.5','4.1.3','5.4.1.1','5.3.2']
+    cis_level_1_exclusions: ['1.2.3','1.3.1','1.8','2.2.7','3.4.1','3.4.2','3.4.3','3.4.4','3.4.5','5.4.1.1','5.3.2']
     cis_level_2_exclusions: ['6.1.1']
       # 1.2.3   - GPG checking
       # 1.3.1   - 'aide --init' on EL8 hangs
       # 1.8     - Yum update *
       # 2.2.7   - Removes ipa-client as a dependency of rpcbind/nfs-utils.
       # 3.4.2-5 - hosts.allow and hosts.deny not configured
-      # 4.1.3   - Ensure auditing for processes that start prior to auditd is enabled
-      #           NOTE: Actually sets "Consistent Interface Device Naming" in /etc/default/grub 
-      #                 but doesn't change device in /etc/sysconfig/network-scripts/ifcfg-?
       # 5.4.1.1 - Ensure password expiration is 90 days or less
       # 5.3.2   - PAM config
       # 6.1.1.  - Audit Sytem File Permissions
     cis_chrony_servers: |+
       pool 2.rhel.pool.ntp.org iburst
     cis_ntp_clients: "{{ cis_chrony_servers }}"
-    cis_rsyslog_remote_loghost_address: "syslog.{{ Local_FQDN }}"
+    cis_rsyslog_remote_loghost_address: "syslog.leandon.local"
     cis_local_login_warning_banner: |+
       ###############################################################
       #  All connections to this system are monitored and recorded  #
@@ -59,9 +56,9 @@ all:
       children:
         naming:
           hosts:
-            "dns.{{ Local_FQDN }}": {
+            "dns.leandon.local": {
 		          "Dummy_Var1": '' }
-            "idm4.{{ Local_FQDN }}": {
+            "idm4.leandon.local": {
 		          "Dummy_Var1": '' }
           vars:
             motd_role: Naming Server
@@ -71,11 +68,11 @@ all:
             
         provisioning:
           hosts:
-            "sat6.{{ Local_FQDN }}": {
+            "sat6.leandon.local": {
 		          "Dummy_Var1": '' }
-            "foreman.{{ Local_FQDN }}": {
+            "foreman.leandon.local": {
 		          "Dummy_Var1": '' }
-            "ansible.{{ Local_FQDN }}": {
+            "ansible.leandon.local": {
 		            "Dummy_Var1": '' }
           vars:
             motd_role: Provisioning Server
@@ -84,13 +81,13 @@ all:
 
     clients:
       hosts:
-        "rhel8svr.{{ Local_FQDN }}": {
+        "rhel8svr.leandon.local": {
 		        "Dummy_Var1": '' }
-        "rhel7svr.{{ Local_FQDN }}": {
+        "rhel7svr.leandon.local": {
 		        "Dummy_Var1": '' }
-        "centos8.{{ Local_FQDN }}": {
+        "centos8.leandon.local": {
 		        "Dummy_Var1": '' }
-        "proxy.{{ Local_FQDN }}":  {
+        "proxy.leandon.local":  {
 		        "Dummy_Var1": '' }
 
       vars:
