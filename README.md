@@ -28,7 +28,7 @@ ansible-playbook -kK --limit ${proxy_svr} hardening.yml
 ansible-playbook -kK --limit ${proxy_svr1},${proxy_svr2} proxy_squid.yml
 ansible-playbook -kK --limit ${ipa_svr} ipa.yml
 ## NOTES:
-1/ If there is only one hosts, you do not need a comma at the end of ${CommaDelimitedHOSTS}
+1/ You do not need a comma at the end of ${CommaDelimitedHOSTS}
 2/ proxy_squid.yml does NOT do HA nor load balancing ATM
 
 # License
