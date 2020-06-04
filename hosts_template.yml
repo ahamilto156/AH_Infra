@@ -33,6 +33,8 @@ all:
       ###############################################################
     cis_remote_login_warning_banner: "{{ cis_local_login_warning_banner }}"
     cis_sshd_client_alive_interval: 82400
+    #Users that are authorised to sudo
+    cis_wheel_group_members: ahamilto
 
     node_exporter_textfile_deploy: true
     node_exporter_enabled_collectors:
