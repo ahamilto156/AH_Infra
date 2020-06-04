@@ -1,39 +1,45 @@
-# AH_Infra 
+# AH_Infra - README
 Ansible playbooks to install/configure various resources
 
-# GIT
+## GIT
 cd ${BaseDir}
+
 git clone https://github.com/ahamilto156/AH_Infra.git
 
-# Requirements
+## Requirements
 For any required Ansible roles, review:
 [requirements.yml](requirements.yml)
 
-# Hosts file
+## Hosts file
 cd  .../AH_Infra
+
 cp hosts_template.yml hosts
+
 sed -i s/"{{ Local_FQDN }}"/${Your_DomainName} hosts
+
 vim hosts ###for hosts configuration
 
-#  Variables
+##  Variables
 [defaults/main.yml](defaults/main.yml)
 
 cd  .../AH_Infra
 ./initialiseRepo.sh
 
-# Execution
+## Execution
 ansible-playbook -kK --limit "${CommaDelimitedHOSTS}” ${PLATBOOK}.yml
-## e.g.  
+
+### e.g.  
 ansible-playbook -kK --limit ${proxy_svr} hardening.yml
 
 ansible-playbook -kK --limit ${proxy_svr1},${proxy_svr2} proxy_squid.yml
+
 ansible-playbook -kK --limit ${ipa_svr} ipa.yml
-## NOTES:
+### NOTES:
 1/ You do not need a comma at the end of ${CommaDelimitedHOSTS}
 
 2/ proxy_squid.yml does NOT do HA nor load balancing ATM
 
-# License
+## License
 Free
 
 # Author Information
