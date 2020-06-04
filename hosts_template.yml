@@ -76,7 +76,7 @@ all:
             "sat6.{{ Local_FQDN }}": {
               "Dummy_Var1": '' }
             "foreman.{{ Local_FQDN }}": {
-		          "Dummy_Var1": '' }
+              "Dummy_Var1": '' }
             "ansible.{{ Local_FQDN }}": {
                 "Dummy_Var1": '' }
           vars:
@@ -91,7 +91,7 @@ all:
         "rhel7svr.{{ Local_FQDN }}": {
             "Dummy_Var1": '' }
         "centos8.{{ Local_FQDN }}": {
-		        "Dummy_Var1": '' }
+            "Dummy_Var1": '' }
         "proxy.{{ Local_FQDN }}":  {
             "Dummy_Var1": '' }
 
