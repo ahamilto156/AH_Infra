@@ -1,3 +1,6 @@
+# Some of the yml scripts won't work because some of the variables used in them aren't defined below. 
+# That is because I have taken the liberty of copying the ansible script's from GG, but not the hosts file...
+
 # NB: change all the Local_FQDN below to your domain
 
 all:

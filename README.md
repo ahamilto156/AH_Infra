@@ -50,8 +50,11 @@ Red Hat
 
 A: L11, 40 Marcus Clarke Street,
     Canberra City, ACT, 2601, Australia
-E: andrew.hamilton@redhat.com   
+
+E: andrew.hamilton@redhat.com  
+
 M: +61-477-242-645-[+61-477-ahamil]
+
 F: +61-2-6247-4380    
 
 # Acknowledgements
