@@ -1,24 +1,37 @@
 # AH_Infra 
 Ansible playbooks to install/configure various resources
 
-## Requirements
+# GIT
+cd ${BaseDir}
+git clone https://github.com/ahamilto156/AH_Infra.git
+
+# Requirements
 For any required Ansible roles, review:
 [requirements.yml](requirements.yml)
 
-##  Variables
+# Hosts file
+cd  .../AH_Infra
+cp hosts_template.yml hosts
+sed -i s/"{{ Local_FQDN }}"/${Your_DomainName} hosts
+vim hosts ###for hosts configuration
+
+#  Variables
 [defaults/main.yml](defaults/main.yml)
 
-## Dependencies
+cd  .../AH_Infra
+./initialiseRepo.sh
 
-## Execution
+# Execution
 ansible-playbook -kK --limit "${CommaDelimitedHOSTS}” ${PLATBOOK}.yml
-e.g.  ansible-playbook -kK --limit proxy_svr hardening.yml
-      ansible-playbook -kK --limit proxy_svr proxy_squid.yml
+## e.g.  
+ansible-playbook -kK --limit ${proxy_svr} hardening.yml
+ansible-playbook -kK --limit ${proxy_svr} proxy_squid.yml
+ansible-playbook -kK --limit ${ipa_svr} ipa.yml
 
-## License
+# License
 Free
 
-## Author Information
+# Author Information
 Andrew Hamilton MEngSc. (Elec.), Grad Dip. PM, BE (Comp.)
 
 Senior Consultant
@@ -30,7 +43,7 @@ E: andrew.hamilton@redhat.com
 M: +61-477-242-645-[+61-477-ahamil]
 F: +61-2-6247-4380    
 
-## Acknowledgements
+# Acknowledgements
 - Firstly:
       I would like to thank Geoff Gatward [GG] who patiently taught me much of what I know about Ansible and directed
       me to his playbooks https://github.com/ggatward/GG_Infra.git that I have based these playbooks on [sometimes plagiarised]
