@@ -29,11 +29,14 @@ cd  .../AH_Infra
 ansible-playbook -kK --limit "${CommaDelimitedHOSTS}” ${PLATBOOK}.yml
 
 ### e.g.  
-ansible-playbook -kK --limit ${proxy_svr} hardening.yml
+ansible-playbook -kK --limit ${server} hardening.yml
 
 ansible-playbook -kK --limit ${proxy_svr1},${proxy_svr2} proxy_squid.yml
 
 ansible-playbook -kK --limit ${ipa_svr} ipa.yml
+
+ansible-playbook -kK --limit ${dns1},${dns2} dns.yml
+
 ### NOTES:
 1/ You do not need a comma at the end of ${CommaDelimitedHOSTS}
 
