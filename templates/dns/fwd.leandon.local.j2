@@ -1,0 +1,27 @@
+$TTL 86400
+@   IN  SOA     dns.leandon.local. root.leandon.local. (
+2014112511  ;Serial
+3600        ;Refresh
+1800        ;Retry
+604800      ;Expire
+86400       ;Minimum TTL
+)
+;Name Server Information
+@      IN  NS      dns.leandon.local.
+;IP address of Name Server
+dns IN  A       192.168.122.62
+;Mail exchanger
+leandon.local. IN  MX 10   mail.leandon.local.
+;A - Record HostName To Ip Address
+foreman	IN A	    192.168.122.60	
+sat6    IN  A       192.168.122.80
+rhel7svr	IN	A	192.168.122.90
+rhel5svr	IN	A	192.168.122.91
+ansible4	IN	A	192.168.122.92
+rh7wbsvr	IN	A	192.168.122.93
+rhel8svr	IN	A	192.168.122.94	
+idm4		IN	A	192.168.122.95	
+centos8		IN	A	192.168.122.96
+proxy		IN	A	192.168.122.97
+;CNAME record
+satellite     IN CNAME        sat6.leandon.local

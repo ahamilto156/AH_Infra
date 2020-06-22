@@ -1,0 +1,54 @@
+---
+- name: System Hardening
+  become: true
+  hosts: all
+- import_playbook: hardening.yml
+      
+# This will create a simple DNS server based on named/bind 
+- name: Install DNS packages
+  yum:
+    name: "{{ item }}"
+    state: present
+    with_items:
+    - bind
+    - bind-utils
+
+- name: Configure DNS Server
+  hosts: all
+  tags:
+  - dns
+  
+  tasks:
+  - name: Configure named - forward
+    template:
+      src: templates/dns/fwd.leandon.local.j2
+      dest: /var/named/fwd.leandon.local
+      mode: 0640
+      owner: root
+      group: root
+      seuser: system_u
+      setype: named_conf_t
+
+  - name: Configure named - reverse
+    template:
+      src: templates/dns/rvs.122.168.192.j2
+      dest: /var/named/rvs.122.168.192.j2
+      mode: 0640
+      owner: root
+      group: root
+      seuser: system_u
+      setype: named_conf_t
+
+  - name: Update firewall rules (service)
+    firewalld:
+      service: "{{ item }}"
+      immediate: yes
+      permanent: yes
+      state: restarted
+    with_items:
+    - dns
+
+  - name: Enable DNS Server
+    service:
+      name: named
+      state: enabled

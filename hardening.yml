@@ -46,6 +46,6 @@
     tags:
     - hardening
 
-- name: Reboot to make ALL hardening changes take effect
-  reboot:
-  msg: "{{ ansible_host }} rebooted to make ALL hardening changes take effect"
+# - name: Reboot to make ALL hardening changes take effect
+#   reboot:
+#   msg: "{{ ansible_host }} rebooted to make ALL hardening changes take effect"
