@@ -1,15 +1,27 @@
 ---
 - name: System Hardening
-  become: true
-  hosts: all
-- import_playbook: hardening.yml
+  import_playbook: hardening.yml
       
 - name: Configure Squid Proxy
   hosts: all
+  pre_tasks:
+  - name: Determine whether there is another NIC operational and what it is
+    Squid_second_NIC: "{{ ansible_interfaces | difference(['lo',ansible_default_ipv4.alias]) | sort | first }}"
+   
+  - debug:
+    msg: "{{ Squid_second_NIC }}"
+
+  - block:
+    - name: Configure second NIC routes
+      file:
+        dest: /tmp/blah  
+        owner: foo
+    when: Squid_second_NIC != ''
+ 
   tasks:
     - name: Configure proxy via role ansible-squid
-      include_role:
-        name: ansible-squid
+      include_role: ansible-squid
+
   vars_files:
     roles/vars/proxy_squid_vars.yml      
   tags:
