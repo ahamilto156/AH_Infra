@@ -1,21 +1,22 @@
 ---
-- import_playbook: hardening.yml
+- name: System Hardening
+  import_playbook: hardening.yml
       
 # This will create a simple DNS server based on named/bind 
-- name: Install DNS packages
-  yum:
-    name: "{{ item }}"
-    state: present
-    with_items:
-    - bind
-    - bind-utils
-
 - name: Configure DNS Server
   hosts: all
   tags:
   - dns
   
   tasks:
+  - name: Install DNS packages
+    yum:
+      name: "{{ item }}"
+      state: present
+      with_items:
+      - bind
+      - bind-utils
+    
   - name: Configure named - forward
     template:
       src: templates/dns/fwd.leandon.local.j2
