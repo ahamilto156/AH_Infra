@@ -1,7 +1,4 @@
 ---
-- name: System Hardening
-  become: true
-  hosts: all
 - import_playbook: hardening.yml
       
 # This will create a simple DNS server based on named/bind 
