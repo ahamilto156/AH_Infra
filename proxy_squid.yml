@@ -4,10 +4,16 @@
       
 - name: Configure Squid Proxy
   hosts: all
+  pre_tasks: 
+    - name: Configure first NIC for local network facing
+
+    - name: Configure second NIC for internet facing
+
   tasks:
     - name: Configure proxy via role ansible-squid
       include_role:
         name: ansible-squid
+ 
   vars_files:
     roles/vars/proxy_squid_vars.yml      
   tags:
