@@ -7,6 +7,8 @@
   pre_tasks: 
     - name: Configure first NIC for local network facing
 
+    # See https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#id21 for setting up access and routes
+
     - name: Configure second NIC for internet facing
 
   tasks:
