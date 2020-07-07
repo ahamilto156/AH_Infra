@@ -1,4 +1,9 @@
 # Default vars for ALL playbooks
 
-Local_FQDN: FQDN
-ClassC_LAN: A.B.C
+Local_FQDN: leandon.local
+ClassC_A: 192
+ClassC_B: 168
+ClassC_C: 122
+ClassC_LAN: "{{ ClassC_A }}.{{ ClassC_B }}.{{ ClassC_C }}"
+ClassC_RVS: "{{ ClassC_C }}.{{ ClassC_B }}.{{ ClassC_A }}"
+DNS_D: 62

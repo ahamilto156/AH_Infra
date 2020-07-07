@@ -17,7 +17,7 @@ options {
 	statistics-file "/var/named/data/named_stats.txt";
 	memstatistics-file "/var/named/data/named_mem_stats.txt";
 	allow-query     { localhost; {{ ClassC_LAN }}.0/24; };
-	allow-transfer	{ localhost; {{ ClassC_LAN }}.62; };
+	allow-transfer	{ localhost; {{ ClassC_LAN }}.{{ DNS_D }}; };
 
 	/* 
 	 - If you are building an AUTHORITATIVE DNS server, do NOT enable recursion.
@@ -61,9 +61,9 @@ zone "{{ Local_FQDN }}" IN {
 	allow-update { none; };
 };
 
-zone "{{ ClassC_LAN }}.in-addr.arpa" IN {
+zone "{{ ClassC_RVS }}.in-addr.arpa" IN {
 	type master;
-	file "rvs.{{ ClassC_LAN }}";
+	file "rvs.{{ ClassC_RVS }}";
 	allow-update { none; };
 };
 

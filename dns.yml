@@ -8,7 +8,9 @@
   hosts: all
   tags:
   - dns
-  
+  vars_files:
+  - vars/main.yml
+
   tasks:
   - name: Install DNS packages
     yum:
@@ -43,8 +45,8 @@
 
   - name: Configure named - reverse
     template:
-      src: templates/dns/rvs.ClassC_LAN.j2
-      dest: /var/named/rvs.{{ ClassC_LAN }}.j2
+      src: templates/dns/rvs.ClassC_RVS.j2
+      dest: /var/named/rvs.{{ ClassC_RVS }}
       mode: 0640
       owner: root
       group: named
