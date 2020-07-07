@@ -20,11 +20,12 @@ vim hosts ###for hosts configuration
 ## DNS files
 cd  .../AH_Infra/templates
 vim fwd.Local_FQDN.j2 rvs.ClassC_LAN.j2     ###for resolution addresses
-vim ../vars/main.yml                        ###for variables
 
 ##  Variables
-[defaults/main.yml](defaults/main.yml)
+[vars/main.yml](vars/main.yml)
+vim ../vars/main.yml                        ###for variables as used in ALL playbooks
 
+## Download roles
 cd  .../AH_Infra
 ./initialiseRepo.sh
 
