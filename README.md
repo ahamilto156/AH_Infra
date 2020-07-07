@@ -11,13 +11,16 @@ For any required Ansible roles, review:
 [requirements.yml](requirements.yml)
 
 ## Hosts file
+###NOTE: Must be done first or the yml's won't run
 cd  .../AH_Infra
-
 cp hosts_template.yml hosts
-
 sed -i s/"{{ Local_FQDN }}"/${Your_DomainName} hosts
-
 vim hosts ###for hosts configuration
+
+## DNS files
+cd  .../AH_Infra/templates
+vim fwd.Local_FQDN.j2 rvs.ClassC_LAN.j2     ###for resolution addresses
+vim ../defaults/main.yml                       ###for variables
 
 ##  Variables
 [defaults/main.yml](defaults/main.yml)
@@ -29,12 +32,13 @@ cd  .../AH_Infra
 ansible-playbook -kK --limit "${CommaDelimitedHOSTS}” ${PLATBOOK}.yml
 
 ### e.g.  
+#### Hardening
 ansible-playbook -kK --limit ${server} hardening.yml
-
+#### Configure Squid Proxy
 ansible-playbook -kK --limit ${proxy_svr1},${proxy_svr2} proxy_squid.yml
-
+#### Configure basic IdM/IPA
 ansible-playbook -kK --limit ${ipa_svr} ipa.yml
-
+#### Configure DNS server
 ansible-playbook -kK --limit ${dns1},${dns2} dns.yml
 
 ### NOTES:

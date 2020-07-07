@@ -1,9 +1,10 @@
 ---
-- name: System Hardening
-  import_playbook: hardening.yml
+# - name: System Hardening
+#   import_playbook: hardening.yml
       
 # This will create a simple DNS server based on named/bind 
 - name: Configure DNS Server
+  become: true
   hosts: all
   tags:
   - dns
@@ -11,30 +12,44 @@
   tasks:
   - name: Install DNS packages
     yum:
-      name: "{{ item }}"
+      name: "{{ packages }}"
       state: present
-      with_items:
+    vars:
+      packages:
       - bind
       - bind-utils
-    
-  - name: Configure named - forward
+   
+  - name: Configure named - general
     template:
-      src: templates/dns/fwd.leandon.local.j2
-      dest: /var/named/fwd.leandon.local
+      src: templates/dns/named.conf.j2
+      dest: /etc/named.conf
       mode: 0640
       owner: root
-      group: root
+      group: named
       seuser: system_u
+      serole: object_r
+      setype: named_conf_t
+
+  - name: Configure named - forward
+    template:
+      src: templates/dns/fwd.Local_FQDN.j2
+      dest: /var/named/fwd.{{ Local_FQDN }}
+      mode: 0640
+      owner: root
+      group: named
+      seuser: system_u
+      serole: object_r
       setype: named_conf_t
 
   - name: Configure named - reverse
     template:
-      src: templates/dns/rvs.122.168.192.j2
-      dest: /var/named/rvs.122.168.192.j2
+      src: templates/dns/rvs.ClassC_LAN.j2
+      dest: /var/named/rvs.{{ ClassC_LAN }}.j2
       mode: 0640
       owner: root
-      group: root
+      group: named
       seuser: system_u
+      serole: object_r
       setype: named_conf_t
 
   - name: Update firewall rules (service)
@@ -42,11 +57,11 @@
       service: "{{ item }}"
       immediate: yes
       permanent: yes
-      state: restarted
+      state: enabled
     with_items:
     - dns
 
   - name: Enable DNS Server
     service:
       name: named
-      state: enabled
+      state: restarted

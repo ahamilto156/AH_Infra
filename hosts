@@ -28,7 +28,7 @@ all:
     cis_chrony_servers: |+
       pool 2.rhel.pool.ntp.org iburst
     cis_ntp_clients: "{{ cis_chrony_servers }}"
-    cis_rsyslog_remote_loghost_address: "syslog.leandon.local"
+    cis_rsyslog_remote_loghost_address: "syslog.{{ Local_FQDN }}"
     cis_local_login_warning_banner: |+
       ###############################################################
       #  All connections to this system are monitored and recorded  #
@@ -64,9 +64,9 @@ all:
       children:
         naming:
           hosts:
-            "dns.leandon.local": {
+            "dns.{{ Local_FQDN }}": {
               "Dummy_Var1": '' }
-            "idm4.leandon.local": {
+            "idm4.{{ Local_FQDN }}": {
               "Dummy_Var1": '' }
           vars:
             motd_role: Naming Server
@@ -76,11 +76,11 @@ all:
             
         provisioning:
           hosts:
-            "sat6.leandon.local": {
+            "sat6.{{ Local_FQDN }}": {
               "Dummy_Var1": '' }
-            "foreman.leandon.local": {
+            "foreman.{{ Local_FQDN }}": {
               "Dummy_Var1": '' }
-            "ansible.leandon.local": {
+            "ansible.{{ Local_FQDN }}": {
                 "Dummy_Var1": '' }
           vars:
             motd_role: Provisioning Server
@@ -89,13 +89,13 @@ all:
 
     clients:
       hosts:
-        "rhel8svr.leandon.local": {
+        "rhel8svr.{{ Local_FQDN }}": {
             "Dummy_Var1": '' }
-        "rhel7svr.leandon.local": {
+        "rhel7svr.{{ Local_FQDN }}": {
             "Dummy_Var1": '' }
-        "centos8.leandon.local": {
+        "centos8.{{ Local_FQDN }}": {
             "Dummy_Var1": '' }
-        "proxy.leandon.local":  {
+        "proxy.{{ Local_FQDN }}":  {
             "Dummy_Var1": '' }
 
       vars:
