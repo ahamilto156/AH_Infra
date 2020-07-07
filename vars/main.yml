@@ -1,0 +1,4 @@
+# Default vars for ALL playbooks
+
+Local_FQDN: FQDN
+ClassC_LAN: A.B.C
