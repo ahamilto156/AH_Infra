@@ -12,14 +12,14 @@
   - vars/main.yml
 
   tasks:
-  # - name: Install DNS packages
-  #   yum:
-  #     name: "{{ packages }}"
-  #     state: present
-  #   vars:
-  #     packages:
-  #     - bind
-  #     - bind-utils
+  - name: Install DNS packages
+    yum:
+      name: "{{ packages }}"
+      state: present
+    vars:
+      packages:
+      - bind
+      - bind-utils
 
   - name: LAN fact check
     debug:
