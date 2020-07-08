@@ -14,12 +14,12 @@ For any required Ansible roles, review:
 ###NOTE: Must be done first or the yml's won't run
 cd  .../AH_Infra
 cp hosts_template.yml hosts
-sed -i s/"{{ Local_FQDN }}"/${Your_DomainName}/g hosts
-vim hosts ###for hosts configuration
+vim hosts ###-> Fill out between the lines
+
 
 ## DNS files
 cd  .../AH_Infra/templates
-vim fwd.Local_FQDN.j2 rvs.ClassC_LAN.j2     ###for resolution addresses
+vim fwd.LAN.Net.Fwd.j2 rvs.LAN.Net.Fwd.j2     ###for resolution addresses
 
 ##  Variables
 [vars/main.yml](vars/main.yml)

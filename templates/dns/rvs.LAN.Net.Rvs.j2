@@ -1,0 +1,24 @@
+$TTL 86400
+@   IN  SOA     dns.{{ LAN.Net.Fwd }}. root.{{ LAN.Net.Fwd }}. (
+2014112511  ;Serial
+3600        ;Refresh
+1800        ;Retry
+604800      ;Expire
+86400       ;Minimum TTL
+)
+;Name Server Information
+@ IN  NS      dns.{{ LAN.Net.Fwd }}.
+;Reverse lookup for Name Server
+62        IN  PTR     dns.{{ LAN.Net.Fwd }}.
+;PTR Record IP address to HostName
+60	IN	PTR	foreman.{{ LAN.Net.Fwd }}
+80	IN	PTR	sat6.{{ LAN.Net.Fwd }}.
+81	IN	PTR	sat64.{{ LAN.Net.Fwd }}
+90	IN	PTR	rhel7svr.{{ LAN.Net.Fwd }}.
+91	IN	PTR	rhel5svr.{{ LAN.Net.Fwd }}.
+92	IN	PTR	ansible4.{{ LAN.Net.Fwd }}.
+93	IN	PTR	rh7wbsvr.{{ LAN.Net.Fwd }}.
+94	IN	PTR	rhel8svr.{{ LAN.Net.Fwd }}
+95	IN	PTR	idm4.{{ LAN.Net.Fwd }}
+96	IN	PTR	centos8.{{ LAN.Net.Fwd }}
+97	IN	PTR	proxy.{{ LAN.Net.Fwd }}

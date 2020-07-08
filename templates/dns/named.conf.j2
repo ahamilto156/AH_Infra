@@ -10,14 +10,14 @@
 // configuration located in /usr/share/doc/bind-{version}/Bv9ARM.html
 
 options {
-	listen-on port 53 { 127.0.0.1; {{ ClassC_LAN }}.0/24; };
+	listen-on port 53 { 127.0.0.1; {{ LAN.Net.Addr }}/{{ LAN.Net.Mask }}; };
 #	listen-on-v6 port 53 { ::1; };
 	directory 	"/var/named";
 	dump-file 	"/var/named/data/cache_dump.db";
 	statistics-file "/var/named/data/named_stats.txt";
 	memstatistics-file "/var/named/data/named_mem_stats.txt";
-	allow-query     { localhost; {{ ClassC_LAN }}.0/24; };
-	allow-transfer	{ localhost; {{ ClassC_LAN }}.{{ DNS_D }}; };
+	allow-query     { localhost; {{ LAN.Net.Fwd }}.0/24; };
+	allow-transfer	{ localhost; {{ LAN.Net.DNS1 }}; {{ LAN.Net.DNS2 }}; };
 
 	/* 
 	 - If you are building an AUTHORITATIVE DNS server, do NOT enable recursion.
@@ -55,15 +55,15 @@ zone "." IN {
         file "named.ca";
 };
 
-zone "{{ Local_FQDN }}" IN {
+zone "{{ LAN.Net.Fwd }}" IN {
 	type master;
-	file "fwd.{{ Local_FQDN }}";
+	file "fwd.{{ LAN.Net.Fwd }}";
 	allow-update { none; };
 };
 
-zone "{{ ClassC_RVS }}.in-addr.arpa" IN {
+zone "{{ LAN.Net.Rvs }}.in-addr.arpa" IN {
 	type master;
-	file "rvs.{{ ClassC_RVS }}";
+	file "rvs.{{ LAN.Net.Rvs }}";
 	allow-update { none; };
 };
 

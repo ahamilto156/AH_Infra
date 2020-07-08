@@ -1,6 +1,6 @@
 ---
-- name: System Hardening
-  import_playbook: hardening.yml
+# - name: System Hardening
+#   import_playbook: hardening.yml
       
 # This will create a simple DNS server based on named/bind 
 - name: Configure DNS Server
@@ -12,15 +12,19 @@
   - vars/main.yml
 
   tasks:
-  - name: Install DNS packages
-    yum:
-      name: "{{ packages }}"
-      state: present
-    vars:
-      packages:
-      - bind
-      - bind-utils
-   
+  # - name: Install DNS packages
+  #   yum:
+  #     name: "{{ packages }}"
+  #     state: present
+  #   vars:
+  #     packages:
+  #     - bind
+  #     - bind-utils
+
+  - name: Arrays
+    debug:
+      msg: "FQDN={{ LAN.FQDN }} DNS1={{ LAN.Net.DNS1 }} DNS2={{ LAN.Net.DNS2 }} NET={{ LAN.Net.Addr }}"
+
   - name: Configure named - general
     template:
       src: templates/dns/named.conf.j2
@@ -34,8 +38,8 @@
 
   - name: Configure named - forward
     template:
-      src: templates/dns/fwd.Local_FQDN.j2
-      dest: /var/named/fwd.{{ Local_FQDN }}
+      src: templates/dns/fwd.LAN.Net.Fwd.j2
+      dest: /var/named/fwd.{{ LAN.Net.Fwd }}
       mode: 0640
       owner: root
       group: named
@@ -45,8 +49,8 @@
 
   - name: Configure named - reverse
     template:
-      src: templates/dns/rvs.ClassC_RVS.j2
-      dest: /var/named/rvs.{{ ClassC_RVS }}
+      src: templates/dns/rvs.LAN.Net.Rvs.j2
+      dest: /var/named/rvs.{{ LAN.Net.Rvs }}
       mode: 0640
       owner: root
       group: named

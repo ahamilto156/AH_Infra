@@ -1,7 +1,7 @@
 # Some of the yml scripts won't work because some of the variables used in them aren't defined below. 
 # That is because I have taken the liberty of copying the ansible script's from GG, but not the hosts file...
 
-# NB: change all the Local_FQDN below to your domain
+# NB: change all the LAN.Net.Fwd below to your domain
 
 all:
   vars:
@@ -28,7 +28,7 @@ all:
     cis_chrony_servers: |+
       pool 2.rhel.pool.ntp.org iburst
     cis_ntp_clients: "{{ cis_chrony_servers }}"
-    cis_rsyslog_remote_loghost_address: "syslog.{{ Local_FQDN }}"
+    cis_rsyslog_remote_loghost_address: "syslog.{{ LAN.Net.Fwd }}"
     cis_local_login_warning_banner: |+
       ###############################################################
       #  All connections to this system are monitored and recorded  #
@@ -64,9 +64,9 @@ all:
       children:
         naming:
           hosts:
-            "dns.{{ Local_FQDN }}": {
+            "dns.{{ LAN.Net.Fwd }}": {
               "Dummy_Var1": '' }
-            "idm4.{{ Local_FQDN }}": {
+            "idm4.{{ LAN.Net.Fwd }}": {
               "Dummy_Var1": '' }
           vars:
             motd_role: Naming Server
@@ -76,11 +76,11 @@ all:
             
         provisioning:
           hosts:
-            "sat6.{{ Local_FQDN }}": {
+            "sat6.{{ LAN.Net.Fwd }}": {
               "Dummy_Var1": '' }
-            "foreman.{{ Local_FQDN }}": {
+            "foreman.{{ LAN.Net.Fwd }}": {
               "Dummy_Var1": '' }
-            "ansible.{{ Local_FQDN }}": {
+            "ansible.{{ LAN.Net.Fwd }}": {
                 "Dummy_Var1": '' }
           vars:
             motd_role: Provisioning Server
@@ -89,13 +89,13 @@ all:
 
     clients:
       hosts:
-        "rhel8svr.{{ Local_FQDN }}": {
+        "rhel8svr.{{ LAN.Net.Fwd }}": {
             "Dummy_Var1": '' }
-        "rhel7svr.{{ Local_FQDN }}": {
+        "rhel7svr.{{ LAN.Net.Fwd }}": {
             "Dummy_Var1": '' }
-        "centos8.{{ Local_FQDN }}": {
+        "centos8.{{ LAN.Net.Fwd }}": {
             "Dummy_Var1": '' }
-        "proxy.{{ Local_FQDN }}":  {
+        "proxy.{{ LAN.Net.Fwd }}":  {
             "Dummy_Var1": '' }
 
       vars:
