@@ -1,0 +1,28 @@
+# Default vars for ALL playbooks
+
+##################### Fill out between the lines ##############
+FQDN: Domain_name
+
+## The following is for the C Class Network Address
+##  i.e. A.B.C.0 is the network address
+##  10.9.8.0 is an example network address
+IP_A: 10
+IP_B: 9
+IP_C: 8
+
+## NB: Only fill out the D octet of the DNS addresses
+IP_DNS1: 7
+IP_DNS2: 6
+
+IP_Mask: 24
+###############################################################
+
+LAN:
+  FQDN: "{{ FQDN }}"
+  Net:
+    Fwd: "{{ IP_A }}.{{ IP_B }}.{{ IP_C }}"
+    Rvs: "{{ IP_C }}.{{ IP_B }}.{{ IP_A }}"
+    Addr: "{{ IP_A }}.{{ IP_B }}.{{ IP_C }}.0"
+    Mask: "{{ IP_Mask }}"
+    DNS1: "{{ IP_A }}.{{ IP_B }}.{{ IP_C }}.{{ IP_DNS1 }}"
+    DNS2: "{{ IP_A }}.{{ IP_B }}.{{ IP_C }}.{{ IP_DNS2 }}"
