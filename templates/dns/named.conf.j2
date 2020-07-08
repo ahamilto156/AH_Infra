@@ -55,9 +55,9 @@ zone "." IN {
         file "named.ca";
 };
 
-zone "{{ LAN.Net.Fwd }}" IN {
+zone "{{ LAN.FQDN }}" IN {
 	type master;
-	file "fwd.{{ LAN.Net.Fwd }}";
+	file "fwd.{{ LAN.FQDN }}";
 	allow-update { none; };
 };
 
