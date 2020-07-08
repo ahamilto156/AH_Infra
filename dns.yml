@@ -21,7 +21,7 @@
   #     - bind
   #     - bind-utils
 
-  - name: Arrays
+  - name: LAN fact check
     debug:
       msg: "FQDN={{ LAN.FQDN }} DNS1={{ LAN.Net.DNS1 }} DNS2={{ LAN.Net.DNS2 }} NET={{ LAN.Net.Addr }}"
 
