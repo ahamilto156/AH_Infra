@@ -1,9 +1,10 @@
 ---
-- name: System Hardening
-  import_playbook: hardening.yml
+# Use Hardening playbook
+- import_playbook: hardening.yml
       
 - name: Configure Squid Proxy
-  hosts: all
+  hosts: proxy
+  become: yes
   pre_tasks: 
     - name: Configure first NIC for local network facing
 
@@ -15,8 +16,8 @@
     - name: Configure proxy via role ansible-squid
       include_role:
         name: ansible-squid
- 
   vars_files:
-    roles/vars/proxy_squid_vars.yml      
+    - vars/main.yml
+    - vars/proxy_squid.yml      
   tags:
   - proxy
