@@ -1,5 +1,5 @@
 $TTL 86400
-@   IN  SOA     dns.{{ LAN.Net.Fwd }}. root.{{ LAN.Net.Fwd }}. (
+@   IN  SOA     dns.{{ LAN.FQDN }}. root.{{ LAN.FQDN }}. (
 2014112511  ;Serial
 3600        ;Refresh
 1800        ;Retry
@@ -7,14 +7,14 @@ $TTL 86400
 86400       ;Minimum TTL
 )
 ;Name Server Information
-@      IN  NS      dns.{{ LAN.Net.Fwd }}.
+@      IN  NS      dns.{{ LAN.FQDN }}.
 ;IP address of Name Server
 dns IN  A       {{ LAN.Net.Fwd }}.62
 ;Mail exchanger
-{{ LAN.Net.Fwd }}. IN  MX 10   mail.{{ LAN.Net.Fwd }}.
+{{ LAN.FQDN }}. IN  MX 10   mail.{{ LAN.FQDN }}.
 ;A - Record HostName To Ip Address
-foreman	IN A	    {{ LAN.Net.Fwd }}.60	
-sat6    IN  A       {{ LAN.Net.Fwd }}.80
+foreman     IN  A	{{ LAN.Net.Fwd }}.60	
+sat6        IN  A   {{ LAN.Net.Fwd }}.80
 rhel7svr	IN	A	{{ LAN.Net.Fwd }}.90
 rhel5svr	IN	A	{{ LAN.Net.Fwd }}.91
 ansible4	IN	A	{{ LAN.Net.Fwd }}.92
@@ -24,4 +24,4 @@ idm4		IN	A	{{ LAN.Net.Fwd }}.95
 centos8		IN	A	{{ LAN.Net.Fwd }}.96
 proxy		IN	A	{{ LAN.Net.Fwd }}.97
 ;CNAME record
-satellite     IN CNAME        sat6.{{ LAN.Net.Fwd }}
+satellite     IN CNAME        sat6.{{ LAN.FQDN }}
