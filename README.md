@@ -14,7 +14,8 @@ For any required Ansible roles, review:
 ###NOTE: Must be done first or the yml's won't run
 cd  .../AH_Infra
 cp hosts_template.yml hosts
-vim hosts ###-> Fill out between the lines
+vim hosts 
+###-> Fill out between the lines
 
 
 ## DNS files
@@ -30,9 +31,9 @@ cd  .../AH_Infra
 ./initialiseRepo.sh
 
 ## Execution
-ansible-playbook -kK --limit "${CommaDelimitedHOSTS}” ${PLATBOOK}.yml
+ansible-playbook -kK --limit "${CommaDelimitedHOSTS}” ${PLAYBOOK}.yml
 
-### e.g.  
+### e.g.s
 #### Hardening
 ansible-playbook -kK --limit ${server} hardening.yml
 #### Configure Squid Proxy
@@ -71,3 +72,6 @@ F: +61-2-6247-4380
       me to his playbooks https://github.com/ggatward/GG_Infra.git that I have based these playbooks on [sometimes plagiarised]
 - Secondly:
       I would like to thank everyone that created roles that I utilise. These roles are listed in [roles/requirements.yml](roles/requirements.yml) 
+
+# To Do
+- Clean up vars: currently in vars/main.yml, vars/proxy_squid.yml AND hosts. i.e. put hosts variables in vars/main.yml
