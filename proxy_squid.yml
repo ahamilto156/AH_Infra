@@ -1,23 +1,36 @@
 ---
 # Use Hardening playbook
-- import_playbook: hardening.yml
+# - import_playbook: hardening.yml
       
 - name: Configure Squid Proxy
-  hosts: proxy
+  hosts: all
   become: yes
-  pre_tasks: 
-    - name: Configure first NIC for local network facing
+  tasks:
+    # - name: Configure primary NIC for local network facing
+
+    - name: Primary NIC facts
+      debug:
+        msg: "Details of primary NIC = {{ primary_NIC }}"
 
     # See https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#id21 for setting up access and routes
 
-    - name: Configure second NIC for internet facing
+    # - name: Configure second NIC for internet facing
 
-  tasks:
-    - name: Configure proxy via role ansible-squid
-      include_role:
-        name: ansible-squid
+    - name: Secondary NIC facts
+      debug:
+        msg: "Details of secondary NIC = {{ secondary_NIC }}"
+
+    # - name: Configure proxy via role ansible-squid
+      # include_role:
+      #   name: ansible-squid
+
+  vars:
+    primary_NIC: "{{ ansible_default_ipv4 }}"
+    secondary_NIC: "{{ ansible_facts | json_query('@.* | [?pciid].{key: pciid, value: device}') | items2dict }}"
+    
   vars_files:
     - vars/main.yml
-    - vars/proxy_squid.yml      
+    - vars/proxy_squid.yml
+    
   tags:
   - proxy
