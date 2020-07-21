@@ -10,7 +10,7 @@
 
     - name: Primary NIC facts
       debug:
-        msg: "Details of primary NIC = {{ primary_NIC_details }}"
+        msg: "Name of primary NIC = {{ primary_NIC_name }}"
 
     # See https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#id21 for setting up access and routes
 
@@ -18,7 +18,7 @@
 
     - name: Secondary NIC facts
       debug:
-        msg: "Details of secondary NIC = {{ secondary_NIC_details }}"
+        msg: "Name of secondary NIC = {{ secondary_NIC_name }}"
 
     # - name: Configure proxy via role ansible-squid
       # include_role:
