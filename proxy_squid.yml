@@ -18,7 +18,7 @@
 
     - name: Secondary NIC facts
       debug:
-        msg: "Details of secondary NIC = {{ secondary_NIC }}"
+        msg: "Details of secondary NIC = {{ secondary_NIC_name }}"
 
     # - name: Configure proxy via role ansible-squid
       # include_role:
@@ -26,11 +26,11 @@
 
   vars:
     primary_NIC: "{{ ansible_default_ipv4 }}"
-    secondary_NIC: "{{ ansible_facts | json_query('@.* | [?pciid].{key: pciid, value: device}') | items2dict }}"
+    secondary_NIC_name: "{{ ansible_facts | json_query('@.* | [?pciid].{key: pciid, value: device}') | last }}"
     
   vars_files:
     - vars/main.yml
     - vars/proxy_squid.yml
-    
+
   tags:
   - proxy
