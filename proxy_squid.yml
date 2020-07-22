@@ -7,6 +7,8 @@
   become: yes
   tasks:
     # - name: Configure primary NIC for local network facing
+    # configure /etc/sysconfig//etc/sysconfig/network-scripts/ifcfg-{{ primary_NIC_name }}
+    # in particular: PROXY_METHOD="none"
 
     - name: Primary NIC facts
       debug:
