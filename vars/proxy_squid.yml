@@ -92,8 +92,8 @@ squid_icp_port: 3130
 
 # Determine whether https is enabled
 squid_https_enabled: false
-  # squid_https_port: 8443
-  # squid_cert_filename: /path/to/CertAuth/testcert.cert
+# squid_https_port: 8443
+# squid_cert_filename: /path/to/CertAuth/testcert.cert
 
 # Define primary domain name
 squid_pri_domain_name: example.org
@@ -129,9 +129,9 @@ squid_transparent_proxy_ferm: false
 # Defines how much time squid should wait before reboot
 squid_shutdown_lifetime: 30 seconds
 
-# DNS Servers
+# Define DNS Servers
 ## For multiple squid_dns_nameservers: "{{ IP1 }},{{ IP2 }},...,{{ IPn }}"
 squid_dns_nameservers: "103.22.144.1"
 
-# Suppress Squid version string info in HTTP headers and HTML error pages
+# Define whether to suppress Squid version string info in HTTP headers and HTML error pages
 squid_suppress_version: on
