@@ -6,21 +6,20 @@
   hosts: all
   become: yes
   tasks:
-    # - name: Configure primary NIC for local network facing
-    # configure /etc/sysconfig//etc/sysconfig/network-scripts/ifcfg-{{ primary_NIC_name }}
-    # in particular: PROXY_METHOD="none"
-
-    - name: Primary NIC facts
+    - name: Primary NIC name
       debug:
         msg: "Name of primary NIC = {{ primary_NIC_name }}"
 
-    # See https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#id21 for setting up access and routes
-
-    # - name: Configure second NIC for internet facing
-
-    - name: Secondary NIC facts
+    - name: Secondary NIC name
       debug:
         msg: "Name of secondary NIC = {{ secondary_NIC_name }}"
+
+    - name: Configure /etc/sysctl.conf for forwarding
+      lineinfile:
+        regexp: "^net.ipv4.ip_forward"
+        line: "net.ipv4.ip_forward=1"
+        dest: "/etc/sysctl.conf"   
+      notify: restart_network
 
     # - name: Configure proxy via role ansible-squid
       # include_role:
