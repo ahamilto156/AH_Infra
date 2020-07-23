@@ -135,3 +135,15 @@ squid_dns_nameservers: "103.22.144.1"
 
 # Define whether to suppress Squid version string info in HTTP headers and HTML error pages
 squid_suppress_version: on
+
+# NIC facts
+NIC_facts:
+  FQDN: "{{ ansible_fqdn }}"
+  primary: 
+    name: "enp1s0"
+    network: "{{ ansible_default_ipv4.network }}"
+    address: "{{ ansible_default_ipv4.address }}"
+  secondary: 
+    name: "enp7s0"
+    network: "{{ ansible_enp7s0.ipv4.network }}"
+    address: "{{ ansible_enp7s0.ipv4.address }}"

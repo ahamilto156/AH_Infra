@@ -1,0 +1,5 @@
+# Allowed IPs
+## e.g.s
+## 192.168.45.1
+## 192.168.21.2
+{{ NIC_facts.primary.network }}
