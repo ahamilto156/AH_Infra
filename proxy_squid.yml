@@ -1,6 +1,6 @@
 ---
 # Use Hardening playbook
-# - import_playbook: hardening.yml
+- import_playbook: hardening.yml
       
 - name: Configure Squid Proxy
   hosts: all
@@ -9,15 +9,15 @@
     - block:
       - name: Warning
         debug:
-          msg: "The following play-book assumes that ALL the NICs are pre-configured."
+          msg: "The following play-book assumes that ALL the NICs are pre-configured. i.e. IPs, networks, etc."
 
-      - name: Primary NIC details
-        debug:
-          msg: "Name of primary NIC: {{ NIC_facts.primary.name }} with address: {{ NIC_facts.primary.address }}"
+      # - name: Primary NIC details
+      #   debug:
+      #     msg: "Name of primary NIC: {{ NIC_facts.primary.name }} with address: {{ NIC_facts.primary.address }}"
 
-      - name: Secondary NIC details
-        debug:
-          msg: "Name of secondary NIC: {{ NIC_facts.secondary.name }} with address: {{ NIC_facts.secondary.address }}"
+      # - name: Secondary NIC details
+      #   debug:
+      #     msg: "Name of secondary NIC: {{ NIC_facts.secondary.name }} with address: {{ NIC_facts.secondary.address }}"
 
     - name: Configure {{ sysctl_conf.destination }} for IP forwarding
       lineinfile:
