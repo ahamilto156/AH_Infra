@@ -26,3 +26,8 @@ LAN:
     Mask: "{{ IP_Mask }}"
     DNS1: "{{ IP_A }}.{{ IP_B }}.{{ IP_C }}.{{ IP_DNS1 }}"
     DNS2: "{{ IP_A }}.{{ IP_B }}.{{ IP_C }}.{{ IP_DNS2 }}"
+
+# Allowed IP's file
+sysctl_conf:
+  name: sysctl.conf
+  destination: /etc/sysctl.conf

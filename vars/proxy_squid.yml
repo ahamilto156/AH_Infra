@@ -136,6 +136,17 @@ squid_dns_nameservers: "103.22.144.1"
 # Define whether to suppress Squid version string info in HTTP headers and HTML error pages
 squid_suppress_version: on
 
+# Squid Configuration file
+squid_conf:
+  name: conf
+  destination: /etc/squid/squid.conf
+
+# Allowed IP's file
+squid_allowed_ips:
+  name: allowed_ips
+  source: templates/proxy_squid/allowed_ips.txt.j2
+  destination: /etc/squid/allowed_ips.txt
+
 # NIC facts
 NIC_facts:
   FQDN: "{{ ansible_fqdn }}"
