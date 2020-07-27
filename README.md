@@ -67,11 +67,10 @@ M: +61-477-242-645-[+61-477-ahamil]
 F: +61-2-6247-4380    
 
 # Acknowledgements
-- Firstly:
-      I would like to thank Geoff Gatward [GG] who patiently taught me much of what I know about Ansible and directed
+- 1: I would like to thank Geoff Gatward [GG] who patiently taught me much of what I know about Ansible and directed
       me to his playbooks https://github.com/ggatward/GG_Infra.git that I have based these playbooks on [sometimes plagiarised]
-- Secondly:
-      I would like to thank everyone that created roles that I utilise. These roles are listed in [roles/requirements.yml](roles/requirements.yml) 
+- 2: I would like to thank everyone that created roles that I utilise. These roles are listed in [roles/requirements.yml](roles/requirements.yml) 
 
 # To Do
 - Clean up vars: currently in vars/main.yml, vars/proxy_squid.yml AND hosts. i.e. put hosts variables in vars/main.yml
+- Squid Proxy server => Exclude CIS Level 2.2.13 => Have to rethink variables, but OK for new squid_proxy server, maybe after above.

@@ -3,21 +3,78 @@
 - import_playbook: hardening.yml
       
 - name: Configure Squid Proxy
-  hosts: proxy
+  hosts: all
   become: yes
-  pre_tasks: 
-    - name: Configure first NIC for local network facing
-
-    # See https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#id21 for setting up access and routes
-
-    - name: Configure second NIC for internet facing
-
   tasks:
-    - name: Configure proxy via role ansible-squid
-      include_role:
+    - block:
+      - name: Warning
+        debug:
+          msg: "The following play-book assumes that ALL the NICs are pre-configured. i.e. IPs, networks, etc."
+
+      # - name: Primary NIC details
+      #   debug:
+      #     msg: "Name of primary NIC: {{ NIC_facts.primary.name }} with address: {{ NIC_facts.primary.address }}"
+
+      # - name: Secondary NIC details
+      #   debug:
+      #     msg: "Name of secondary NIC: {{ NIC_facts.secondary.name }} with address: {{ NIC_facts.secondary.address }}"
+
+    - name: Configure {{ sysctl_conf.destination }} for IP forwarding
+      lineinfile:
+        regexp: "^net.ipv4.ip_forward"
+        line: "net.ipv4.ip_forward=1"
+        dest: "{{ sysctl_conf.destination }}"   
+      notify: restart_network
+
+    - name: Configure squid
+      import_role:
         name: ansible-squid
+
+    ## See https://www.mynotepaper.com/install-and-configure-squid-proxy-on-centos
+    - name: Putting the file that contains allowed IP's i.e. {{ squid_allowed_ips.destination }}
+      template:
+        src: "{{ squid_allowed_ips.source }}"
+        dest: "{{ squid_allowed_ips.destination }}"
+
+    - name: Enable all ip's on internal network
+      lineinfile:
+        regexp: "^acl allowed_ips"
+        line: 'acl allowed_ips  src "{{ squid_allowed_ips.destination }}"'
+        dest: "{{ squid_conf.destination }}"   
+      ### The restart squid handler is not needed as the role does it
+      # notify: restart_squid
+
+    - name: Enable all ip's on http from these IP addresses
+      lineinfile:
+        regexp: "^http_access allow {{ squid_allowed_ips.name }}"
+        line: "http_access allow {{ squid_allowed_ips.name }}"
+        dest: "{{ squid_conf.destination }}"   
+      ### The restart squid handler is not needed as the role does it
+      # notify: restart_squid
+
   vars_files:
     - vars/main.yml
-    - vars/proxy_squid.yml      
+    - vars/proxy_squid.yml
+
   tags:
   - proxy
+
+  handlers:
+  - block:
+    - name: restart_network
+      systemd:
+        name: NetworkManager
+        state: restarted
+      when: ansible_distribution_major_version == '8'
+
+    - name: restart_network
+      systemd:
+        name: network
+        state: restarted
+      when: ansible_distribution_major_version == '7'
+    when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
+
+  - name: restart_squid
+    service:
+      name: squid
+      state: restarted

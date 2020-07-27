@@ -1,12 +1,14 @@
 ---
 roles:
 
+# Hardening
 - src: https://github.com/ggatward/Ansible-RHEL7-CIS-Benchmarks.git
   scm: git
 
 - src: https://github.com/ggatward/Ansible-RHEL8-CIS-Benchmarks.git
   scm: git
 
+# Infrastructure
 - src: https://github.com/ggatward/ansible-ipaclient.git
   scm: git
 
