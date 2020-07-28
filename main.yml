@@ -1,52 +1,28 @@
 ---
-# Provision VM instance
-
 # Bootstrap
-#- import_playbook: bootstrap_instance.yml    # (as root)
+#- import_playbook: bootstrap_vm.yml          # (as root)
 #- import_playbook: bootstrap_rpi.yml         # (as pi)
 
+# All servers
 - import_playbook: generic.yml
-  vars:
-    hostlist: all
 - import_playbook: hardening.yml
-  vars:
-    hostlist: all
 
 # General network services
-- import_playbook: general_services.yml
+# - import_playbook: general_services.yml
 
 # Prepare KVM hosts for VMs
-- import_playbook: kvmhost.yml
+# - import_playbook: kvmhost.yml
 
 # Specific application/function config
-- import_playbook: prometheus.yml
-- import_playbook: weather.yml
-- import_playbook: automation.yml
-- import_playbook: adsb.yml
+# - import_playbook: prometheus.yml
+# - import_playbook: weather.yml
+# - import_playbook: automation.yml
+# - import_playbook: adsb.yml
 - import_playbook: proxy_squid.yml
 # - import_playbook: workstation.yml
 
-handlers:
-- name: restart_sshd
-  systemd:
-    name: sshd
-    state: restarted
-
-- block:
-  - name: restart_network
-    systemd:
-      name: NetworkManager
-      state: restarted
-    when: ansible_distribution_major_version == '8'
-
-  - name: restart_network
-    systemd:
-      name: network
-      state: restarted
-    when: ansible_distribution_major_version == '7'
-  when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
-
-- name: restart_squid
-  service:
-    name: squid
-    state: restarted
+# handlers:
+# - name: restart_sshd
+#   systemd:
+#     name: sshd
+#     state: restarted

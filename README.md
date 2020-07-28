@@ -31,19 +31,31 @@ cd  .../AH_Infra
 ./initialiseRepo.sh
 
 ## Execution
-ansible-playbook -kK --limit "${CommaDelimitedHOSTS}” ${PLAYBOOK}.yml
+### General VM
+ansible-playbook -kK --limit "${CommaDelimitedHOSTS}” --tags "${CommaDelimitedTasksToBeRun}" main.yml
 
-### e.g.s
-#### Hardening
+#### e.g.s
+##### Configure Squid Proxy
+ansible-playbook -kK --limit ${proxy_svr1},${proxy_svr2} --tags hardening,proxy main.yml
+OR/ 
+ansible-playbook -kK --limit proxy --tags hardening,proxy main.yml
+##### Configure basic IdM/IPA
+ansible-playbook -kK --limit ipa ipa.yml
+
+### Specific VM
+ansible-playbook -kK --limit "${CommaDelimitedHOSTS}” ${task}.yml
+
+#### e.g.s
+##### Hardening
 ansible-playbook -kK --limit ${server} hardening.yml
-#### Configure Squid Proxy
+##### Configure Squid Proxy
 ansible-playbook -kK --limit ${proxy_svr1},${proxy_svr2} proxy_squid.yml
-#### Configure basic IdM/IPA
+##### Configure basic IdM/IPA
 ansible-playbook -kK --limit ${ipa_svr} ipa.yml
-#### Configure DNS server
+##### Configure DNS server
 ansible-playbook -kK --limit ${dns1},${dns2} dns.yml
 
-### NOTES:
+#### NOTES:
 1/ You do not need a comma at the end of ${CommaDelimitedHOSTS}
 
 2/ proxy_squid.yml does NOT do HA nor load balancing ATM

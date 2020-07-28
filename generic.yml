@@ -1,7 +1,7 @@
 ---
 - name: Generic Infrastructure
   become: true
-  hosts: "{{ hostlist }},!docker,!containers"
+  hosts: "all,!docker,!containers"
   tasks:
   - name: Update apt cache
     tags:
@@ -38,7 +38,7 @@
   become: true
   hosts: "{{ hostlist }},!docker,!containers,!ipa"
   vars_files:
-  - vault.yml
+  - vars/generic_vault.yml
   tasks:
   - name: Configure IPA client
     tags:

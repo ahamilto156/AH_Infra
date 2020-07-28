@@ -1,9 +1,10 @@
 ---
 # Use Hardening playbook
-- import_playbook: hardening.yml
+# - import_playbook: hardening.yml
       
 - name: Configure Squid Proxy
-  hosts: all
+  hosts: 
+  - proxy
   become: yes
   tasks:
     - block:
