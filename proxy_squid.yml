@@ -52,12 +52,12 @@
       ### The restart squid handler is not needed as the role does it
       # notify: restart_squid
 
-  - name: Open Firewall Service for Squid
-    firewalld:
-      service: "squid"
-      immediate: yes
-      permanent: yes
-      state: enabled
+    - name: Open Firewall Service for Squid
+      firewalld:
+        service: "squid"
+        immediate: yes
+        permanent: yes
+        state: enabled
 
   ## We are not going to use authentication, because the user has already 
   ##  authenticated on the primary network...
