@@ -25,3 +25,9 @@
 - import_playbook: adsb.yml
 - import_playbook: proxy_squid.yml
 # - import_playbook: workstation.yml
+
+# handlers:
+# - name: restart_sshd
+#   systemd:
+#     name: sshd
+#     state: restarted
