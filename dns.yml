@@ -5,7 +5,7 @@
 # This will create a simple DNS server based on named/bind 
 - name: Configure DNS Server
   become: true
-  hosts: all
+  hosts: naming
   tags:
   - dns
   vars_files:

@@ -164,3 +164,11 @@
         - "--path.sysfs=/host/sys"
         - "--collector.filesystem.ignored-mount-points"
         - "^/(rootfs/)?(dev|etc|host|proc|run|sys|volume1)($$|/)"
+
+####################################################################################
+
+handlers:
+- name: restart_sshd
+  systemd:
+    name: sshd
+    state: restarted        

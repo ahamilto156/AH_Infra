@@ -1,28 +1,26 @@
 ---
+#NOTE: The following imported playbooks that are commented out are not written, updated or tested by me!
+#      They are commented out to save processing
+
 # Bootstrap
 #- import_playbook: bootstrap_vm.yml          # (as root)
 #- import_playbook: bootstrap_rpi.yml         # (as pi)
 
 # All servers
 - import_playbook: generic.yml
+- import_playbook: general_network_services.yml
 - import_playbook: hardening.yml
-
-# General network services
-# - import_playbook: general_services.yml
 
 # Prepare KVM hosts for VMs
 # - import_playbook: kvmhost.yml
 
 # Specific application/function config
-# - import_playbook: prometheus.yml
-# - import_playbook: weather.yml
 # - import_playbook: automation.yml
 # - import_playbook: adsb.yml
+- import_playbook: dns.yml
+# - import_playbook: ipa.yml
+# - import_playbook: ovirt.yml
+# - import_playbook: prometheus.yml
 - import_playbook: proxy_squid.yml
+# - import_playbook: weather.yml
 # - import_playbook: workstation.yml
-
-# handlers:
-# - name: restart_sshd
-#   systemd:
-#     name: sshd
-#     state: restarted

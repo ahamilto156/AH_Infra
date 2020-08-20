@@ -4,12 +4,12 @@
   tags:
   - generic
   vars:
-    hostlist: ipa
+    hostlist: naming
 - import_playbook: hardening.yml
   tags:
   - hardening
   vars:
-    hostlist: ipa
+    hostlist: naming
 
 - name: Configure IPA Servers
   become: true
