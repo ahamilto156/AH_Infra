@@ -1,9 +1,9 @@
 ---
-# - name: System Hardening
+# - name: DNS - System Hardening
 #   import_playbook: hardening.yml
       
 # This will create a simple DNS server based on named/bind 
-- name: Configure DNS Server
+- name: DNS - Configure DNS Server
   become: true
   hosts: naming
   tags:
@@ -12,7 +12,18 @@
   - vars/main.yml
 
   tasks:
-  - name: Install DNS packages
+  - name: DNS - Make sure Red Hat is reachable
+    template:
+      src: templates/dns/resolv.conf.j2
+      dest: /etc/resolv.conf  
+      mode: 0640
+      owner: root
+      group: root
+      seuser: system_u
+      serole: object_r
+      setype: named_conf_t
+    
+  - name: DNS - Install DNS packages
     yum:
       name: "{{ packages }}"
       state: present
@@ -21,11 +32,23 @@
       - bind
       - bind-utils
 
-  - name: LAN fact check
+  - name: DNS - restart network to restore /etc/resolv.conf - RHEL 6 or 7
+    service:
+      name: network
+      state: restarted
+    when: ansible_distribution_major_version <= '7'
+
+  - name: DNS - restart network to restore /etc/resolv.conf -  RHEL 8
+    service:
+      name: NetworkManager
+      state: restarted
+    when: ansible_distribution_major_version == '8'
+
+  - name: DNS - LAN fact check
     debug:
       msg: "FQDN={{ LAN.FQDN }} DNS1={{ LAN.Net.DNS1 }} DNS2={{ LAN.Net.DNS2 }} NET={{ LAN.Net.Addr }}"
 
-  - name: Configure named - general
+  - name: DNS - Configure named - general
     template:
       src: templates/dns/named.conf.j2
       dest: /etc/named.conf
@@ -36,7 +59,7 @@
       serole: object_r
       setype: named_conf_t
 
-  - name: Configure named - forward
+  - name: DNS - Configure named - forward
     template:
       src: templates/dns/fwd.LAN.Net.Fwd.j2
       dest: /var/named/fwd.{{ LAN.FQDN }}
@@ -47,7 +70,7 @@
       serole: object_r
       setype: named_conf_t
 
-  - name: Configure named - reverse
+  - name: DNS - Configure named - reverse
     template:
       src: templates/dns/rvs.LAN.Net.Rvs.j2
       dest: /var/named/rvs.{{ LAN.Net.Rvs }}
@@ -58,7 +81,7 @@
       serole: object_r
       setype: named_conf_t
 
-  - name: Update firewall rules (service)
+  - name: DNS - Update firewall rules (service)
     firewalld:
       service: "{{ item }}"
       immediate: yes
@@ -67,7 +90,7 @@
     with_items:
     - dns
 
-  - name: Enable DNS Server
+  - name: DNS - Enable DNS Server
     service:
       name: named
       state: restarted
