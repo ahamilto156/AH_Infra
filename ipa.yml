@@ -15,7 +15,7 @@
   become: true
   hosts: ipa
   vars_files:
-  - vault.yml
+  - vars/ipa_vault.yml
   tasks:
   # Add host entry to hosts file
   - name: Add local host entry to hosts file

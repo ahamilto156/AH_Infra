@@ -4,7 +4,7 @@
   gather_facts: false
   hosts: all
   vars_files:
-  - vault.yml
+  - vars/bootstrap_vault.yml
   tasks:
   - name: Deploy Gold Image root SSH key
     tags:
