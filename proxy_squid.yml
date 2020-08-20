@@ -5,6 +5,14 @@
 - name: Configure Squid Proxy
   hosts: all
   become: yes
+
+  vars_files:
+    - vars/main.yml
+    - vars/proxy_squid.yml
+
+  tags:
+  - proxy
+  
   tasks:
     - block:
       - name: Warning
@@ -63,13 +71,6 @@
   ##  authenticated on the primary network...
   ## If this decision is not valid for your organisation; See
   ## https://www.papercut.com/kb/Main/ConfiguringSquidProxyToAuthenticateWithActiveDirectory#configuring-squid-ldap-authentication
-
-  vars_files:
-    - vars/main.yml
-    - vars/proxy_squid.yml
-
-  tags:
-  - proxy
 
   handlers:
   - block:
