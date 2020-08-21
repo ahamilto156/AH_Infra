@@ -1,6 +1,6 @@
 ---
-# - name: DNS - System Hardening
-#   import_playbook: hardening.yml
+- name: DNS - System Hardening
+  import_playbook: hardening.yml
       
 # This will create a simple DNS server based on named/bind 
 - name: DNS - Configure DNS Server

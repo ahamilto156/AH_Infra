@@ -1,12 +1,12 @@
 ---
-- name: System Hardening
+- name: Hardening - System Hardening
   become: true
   hosts: all
 
   tasks:
   - block:
     - block:
-      - name: Apply CIS hardening for RHEL 8.0 or 8.1 via role Ansible-RHEL8-CIS-Benchmarks8
+      - name: Hardening - Apply CIS hardening for RHEL 8.0 or 8.1 via role Ansible-RHEL8-CIS-Benchmarks8
         include_role:
           name: Ansible-RHEL8-CIS-Benchmarks
         vars:
@@ -17,7 +17,7 @@
         - cis
         when: ansible_distribution_version < '8.2'
  
-      - name: Apply CIS hardening for RHEL 8.2+ via role Ansible-RHEL8-CIS-Benchmarks8
+      - name: Hardening - Apply CIS hardening for RHEL 8.2+ via role Ansible-RHEL8-CIS-Benchmarks8
         include_role:
           name: Ansible-RHEL8-CIS-Benchmarks
         vars:
@@ -30,7 +30,7 @@
         when: ansible_distribution_version >= '8.2'
       when: ansible_distribution_major_version == '8'
 
-    - name: Apply CIS hardening for EL7
+    - name: Hardening - Apply CIS hardening for EL7
       import_role:
         name: Ansible-RHEL7-CIS-Benchmarks
       tags:
@@ -40,16 +40,16 @@
     when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
 
 
-- name: Extra System Hardening
+- name: Hardening - Extra System Hardening
   become: true
   hosts: all
   tasks:
-  - name: Apply additional hardening
+  - name: Hardening - Apply additional hardening
     import_role:
       name: ansible-role-extra-hardening
     tags:
     - hardening
 
-# - name: Reboot to make ALL hardening changes take effect
-#   reboot:
-#   msg: "{{ ansible_host }} rebooted to make ALL hardening changes take effect"
+- name: Hardening - Reboot to make ALL hardening changes take effect
+  reboot:
+  msg: "{{ ansible_host }} rebooted to make ALL hardening changes take effect"

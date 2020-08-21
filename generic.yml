@@ -1,9 +1,9 @@
 ---
-- name: Generic Infrastructure
+- name: Generic - Generic Infrastructure
   become: true
   hosts: "all,!docker,!containers"
   tasks:
-  - name: Update apt cache
+  - name: Generic - Update apt cache
     tags:
     - generic
     become: true
@@ -12,20 +12,20 @@
       update_cache: true
       cache_valid_time: 3600
 
-  - name: Generic configurations
+  - name: Generic - Generic configurations
     tags:
     - generic
     import_role:
       name: ansible-generic-os
 
-  - name: Install platform tools
+  - name: Generic - Install platform tools
     tags:
     - generic
     - platform_tools
     import_role:
       name: ansible-role-hw_vm_tools
 
-  - name: Install CA certificates
+  - name: Generic - Install CA certificates
     import_role:
       name: ansible-role-cacerts
     tags:
@@ -34,13 +34,13 @@
 
 ####################################################################
 
-- name: Authentication
+- name: Generic - Authentication
   become: true
   hosts: "{{ hostlist }},!docker,!containers,!ipa"
   vars_files:
   - vars/generic_vault.yml
   tasks:
-  - name: Configure IPA client
+  - name: Generic - Configure IPA client
     tags:
     - generic
     - ipa
@@ -65,7 +65,7 @@
       - lab.home.gatwards.org
       - .lab.home.gatwards.org
 
-  - name: Add NFS domain to idmap.conf
+  - name: Generic - Add NFS domain to idmap.conf
     tags:
     - generic
     - ipa
@@ -79,7 +79,7 @@
 
 ####################################################################
 
-- name: Monitoring
+- name: Generic - Monitoring
   hosts: "{{ hostlist }},!docker,!containers"
   become: true
   tasks:
@@ -89,7 +89,7 @@
     - monitoring
     - node_exporter
 
-  - name: Open Prometheus node_exporter firewall port
+  - name: Generic - Open Prometheus node_exporter firewall port
     tags:
     - monitoring
     - node_exporter

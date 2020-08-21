@@ -1,10 +1,10 @@
 ---
-- name: Configure Time Server
+- name: Network Config - Configure Time Server
   become: true
   hosts: rpi-util1.core.home.gatwards.org
 
   tasks:
-  - name: Configure GPSd
+  - name: Network Config - Configure GPSd
     tags:
     - gpsd
     - ntp
@@ -17,7 +17,7 @@
       gpsd_run_as_root: true
       gpsd_listen_all_interfaces: true
 
-  - name: Configure Chrony Server
+  - name: Network Config - Configure Chrony Server
     tags:
     - chrony
     - ntp
@@ -32,7 +32,7 @@
         refclock: SHM 0 delay 0.2 refid GPS
         #refclock: PPS /dev/pps0 refid PPS
 
-  - name: Update firewall rules (ports)
+  - name: Network Config - Update firewall rules (ports)
     tags:
     - chrony
     - gpsd
@@ -46,7 +46,7 @@
     - 2947/tcp
     - 3333/tcp
 
-  - name: Update firewall rules (services)
+  - name: Network Config - Update firewall rules (services)
     tags:
     - chrony
     - gpsd
@@ -62,13 +62,13 @@
 
 ####################################################################################
 
-- name: Provision InfluxDB container
+- name: Network Config - Provision InfluxDB container
   become: true
   hosts: docker_nas
   vars_files:
   - vault.yml
   tasks:
-  - name: Configure InfluxDB
+  - name: Network Config - Configure InfluxDB
     tags:
     - influxdb
     - monitoring
@@ -78,7 +78,7 @@
     vars:
       docker_persistent_store_root: /volume2/docker/influxdb
 
-  - name: Create Databases
+  - name: Network Config - Create Databases
     tags:
     - influxdb
     - monitoring
@@ -88,7 +88,7 @@
       hostname: influxdb.core.home.gatwards.org
     with_items: "{{ hostvars[groups['influxdb'][0]].influxdb_databases }}"
 
-  - name: Configure retention policies
+  - name: Network Config - Configure retention policies
     tags:
     - influxdb
     - monitoring
@@ -104,14 +104,14 @@
 
 ####################################################################################
 
-- name: Provision Grafana container
+- name: Network Config - Provision Grafana container
   remote_user: svc-ansible
   become: true
   hosts: docker_nas
   vars_files:
   - vault.yml
   tasks:
-  - name: Configure Grafana
+  - name: Network Config - Configure Grafana
     tags:
     - monitoring
     - grafana
@@ -123,14 +123,14 @@
 
 ####################################################################################
 
-- name: Provision UniFi container
+- name: Network Config - Provision UniFi container
   remote_user: svc-ansible
   become: true
   hosts: docker_nas
   vars_files:
   - vault.yml
   tasks:
-  - name: Configure UniFi
+  - name: Network Config - Configure UniFi
     tags:
     - unifi
     - docker
@@ -139,12 +139,12 @@
 
 ####################################################################################
 
-- name: Provision NAS node_exporter container
+- name: Network Config - Provision NAS node_exporter container
   remote_user: svc-ansible
   become: true
   hosts: docker_nas
   tasks:
-  - name: Deploy node_exporter container
+  - name: Network Config - Deploy node_exporter container
     tags:
     - monitoring
     - node_exporter
@@ -168,7 +168,7 @@
 ####################################################################################
 
 handlers:
-- name: restart_sshd
+- name: Network Config - restart_sshd
   systemd:
     name: sshd
     state: restarted        
