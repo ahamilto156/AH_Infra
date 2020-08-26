@@ -31,7 +31,7 @@ cd  .../AH_Infra
 ./initialiseRepo.sh
 
 ## Execution
-### General VM
+### General Tasks
 ansible-playbook -kK --limit "${CommaDelimitedHOSTS}” --tags "${CommaDelimitedTasksToBeRun}" main.yml
 
 #### e.g.s
@@ -42,7 +42,7 @@ ansible-playbook -kK --limit proxy --tags hardening,proxy main.yml
 ##### Configure basic IdM/IPA
 ansible-playbook -kK --limit ipa ipa.yml
 
-### Specific VM
+### Specific Task
 ansible-playbook -kK --limit "${CommaDelimitedHOSTS}” ${task}.yml
 
 #### e.g.s
