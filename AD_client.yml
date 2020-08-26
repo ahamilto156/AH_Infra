@@ -3,3 +3,12 @@
   become: true
   hosts: all
   tasks:
+    - name: AD client - install sssd
+      package:
+        name: 
+        - sssd
+        - sssd-common
+        - sssd-ad
+        - krb5-workstation
+        - samba-common-tools
+        state: present
