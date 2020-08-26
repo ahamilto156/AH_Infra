@@ -1,0 +1,5 @@
+---
+- name: AD client - Make server an AD client
+  become: true
+  hosts: all
+  tasks:
