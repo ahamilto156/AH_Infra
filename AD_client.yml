@@ -10,5 +10,5 @@
         - sssd-common
         - sssd-ad
         - krb5-workstation
-        - samba-common-tools
+        # - samba-common-tools
         state: present
