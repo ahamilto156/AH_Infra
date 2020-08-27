@@ -54,8 +54,8 @@ ansible-playbook -kK --limit ${proxy_svr1},${proxy_svr2} proxy_squid.yml
 ansible-playbook -kK --limit ${ipa_svr} ipa.yml
 ##### Configure DNS server
 ansible-playbook -kK --limit ${dns1},${dns2} dns.yml
-##### Configure server as AD client [one or more domains]
-ansible-playbook -kK --limit ${server1},...,${servery} [-e ${Domain1},...,$Domainx}] AD_client.yml
+##### Configure second authorisation domain client
+ansible-playbook -kK --limit ${server1},...,${serverx} -t IdM_client|LDAP_client|AD_client -e SecondDomain=${SecondDomain} auth2_client.yml
 
 #### NOTES:
 1/ You do not need a comma at the end of ${CommaDelimitedHOSTS}
