@@ -1,6 +1,6 @@
 ---
 #The below play-book will only set up the server as a second authorisation client
-# i.e. assumes that generic has been run so that it is set up as a client to one auth. server
+# i.e. assumes that generic has been run so that it is set up as a IPA/IdM client to one auth. server
 
 - name: 2nd auth. client - Make the server an IdM client
   become: true
@@ -17,6 +17,30 @@
         - sssd-client
         - sssd-common
         state: present
+
+    - name: IdM client - Set up sssd config. file = {{ sssd_conffile }}
+      template:
+        src: "templates/auth2_client/IdM.conf.j2"
+        dest: "{{ sssd_conffile }}"
+        mode: 0640
+        owner: sssd
+        group: sssd
+        seuser: system_u
+        serole: object_r
+        setype: sssd_t
+
+    - name: IdM client - Add IdM to /etc/sssd.conf
+      lineinfile:
+        regexp: "^domains ="
+        line: "domains = {{ SecondDomain }}"
+        dest: "/etc/sssd.conf"   
+      notify: restart_sssd
+
+  handlers:
+    - name: 2nd auth. client - restart_sssd
+      systemd:
+        name: sssd
+        state: restarted
 
 - name: 2nd auth. client - Make the server an LDAP client
   become: true
@@ -41,6 +65,7 @@
         msg: "basedir = {{ sssd_basedir }}, confdir = {{ sssd_confdir }} & conffile = {{ sssd_conffile }}"
 
     - name: LDAP client - Set up sssd config. file = {{ sssd_conffile }}
+    ## Need to automate "ldap_search_base = dc=example,dc=com" in {{ sssd_conffile }}
       template:
         src: "templates/auth2_client/LDAP.conf.j2"
         dest: "{{ sssd_conffile }}"
@@ -50,6 +75,19 @@
         seuser: system_u
         serole: object_r
         setype: sssd_t
+
+    - name: LDAP client - Add LDAP to /etc/sssd.conf
+      lineinfile:
+        regexp: "^domains ="
+        line: "domains = LDAP"
+        dest: "/etc/sssd.conf"   
+      notify: restart_sssd
+
+  handlers:
+    - name: 2nd auth. client - restart_sssd
+      systemd:
+        name: sssd
+        state: restarted
 
 - name: 2nd auth. client - Make the server an AD client
   become: true
@@ -68,3 +106,7 @@
         - sssd-ad
         - krb5-workstation
         state: present
+
+    - name: AD client - Use AD role
+      import_role:
+        name: TBA
