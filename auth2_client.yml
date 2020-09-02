@@ -8,6 +8,7 @@
   hosts: all
   tags: IdM_client
   vars_files:
+    - vars/auth2.yml
     - vars/IdM.yml
   tasks:
     - name: IdM client - Confirm the installation of sssd
@@ -48,6 +49,7 @@
   hosts: all
   tags: LDAP_client
   vars_files:
+    - vars/auth2.yml
     - vars/LDAP.yml
   tasks:
     - name: LDAP client - Confirm the installation of sssd
@@ -95,6 +97,7 @@
   hosts: all
   tags: AD_client
   vars_files:
+    - vars/auth2.yml
     - vars/AD.yml
   tasks:
     - name: AD client - Confirm the installation of sssd
@@ -107,6 +110,6 @@
         - krb5-workstation
         state: present
 
-    - name: AD client - Use AD role
-      import_role:
-        name: TBA
+    # - name: AD client - Use AD role
+    #   import_role:
+    #     name: TBA
