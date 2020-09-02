@@ -33,6 +33,9 @@ roles:
 - src: https://github.com/robertdebock/ansible-role-dns.git
   scm: git
 
+- src: https://github.com/Thulium-Drake/ansible-role-adjoin
+  scm: git
+
 # - src: git@github.com:ggatward/ansible-role-workstation.git
 #   scm: git
 #   version: development

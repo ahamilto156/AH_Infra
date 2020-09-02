@@ -110,6 +110,6 @@
         - krb5-workstation
         state: present
 
-    # - name: AD client - Use AD role
-    #   import_role:
-    #     name: TBA
+    - name: AD client - Use AD role
+      import_role:
+        name: ansible-role-adjoin

@@ -15,6 +15,7 @@
 # - import_playbook: kvmhost.yml
 
 # Specific application/function config
+- import_playbook: auth2_conf.yml
 # - import_playbook: automation.yml
 # - import_playbook: adsb.yml
 - import_playbook: dns.yml
