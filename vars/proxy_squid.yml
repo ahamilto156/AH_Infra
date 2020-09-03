@@ -1,3 +1,4 @@
+---
 # acl aclname acltype argument
 squid_acl:
   - name: SSL_ports

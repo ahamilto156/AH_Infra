@@ -1,0 +1,18 @@
+---
+# The role ansible-role-adjoin setes some variables commented below. It is unlikely that these will need changing, but if they do:
+## Uncomment the appropriate line below, AND
+## Change the var
+
+# packages:
+#   - 'openldap-clients'
+#   - 'krb5-workstation'
+#   - 'sssd'
+#   - 'sudo'
+#   - 'samba-winbind-clients'
+#   - 'oddjob-mkhomedir'
+#   - 'authconfig'
+
+# openldap_conffile: '/etc/openldap/ldap.conf'
+
+# os_specific_services:
+#   - {'name':'oddjobd', 'enabled':'yes', 'masked':'no', 'state':'started'}
