@@ -31,7 +31,7 @@ cd  .../AH_Infra
 ./initialiseRepo.sh
 
 ## Execution
-### General VM
+### General Tasks
 ansible-playbook -kK --limit "${CommaDelimitedHOSTS}” --tags "${CommaDelimitedTasksToBeRun}" main.yml
 
 #### e.g.s
@@ -40,9 +40,18 @@ ansible-playbook -kK --limit ${proxy_svr1},${proxy_svr2} --tags hardening,proxy 
 OR/ 
 ansible-playbook -kK --limit proxy --tags hardening,proxy main.yml
 ##### Configure basic IdM/IPA
-ansible-playbook -kK --limit ipa ipa.yml
+ansible-playbook -kK --limit ipa  --tags hardening,ipa main.yml
+##### Second authorisation domain
+ansible-playbook -kK --limit ${server1},...,${serverx} -t IdM_client|LDAP_client|AD_client -e SecondDomain=${SecondDomain} main.yml
 
-### Specific VM
+#### NB:
+***** ATM Even though the main.yml comments out various playbooks, 'cause I've not tested them, they are still checked!
+***** So the way around this is just to call the specific playbook (e.g. hardening.yml)
+
+#### General Tasks NOTES:
+1/ If tags are NOT specified then EVERYTHING will be run, which won't work!
+
+### Specific Tasks
 ansible-playbook -kK --limit "${CommaDelimitedHOSTS}” ${task}.yml
 
 #### e.g.s
@@ -54,11 +63,15 @@ ansible-playbook -kK --limit ${proxy_svr1},${proxy_svr2} proxy_squid.yml
 ansible-playbook -kK --limit ${ipa_svr} ipa.yml
 ##### Configure DNS server
 ansible-playbook -kK --limit ${dns1},${dns2} dns.yml
+##### Configure second authorisation domain client
+ansible-playbook -kK --limit ${server1},...,${serverx} -t IdM_client|LDAP_client|AD_client -e SecondDomain=${SecondDomain} auth2_client.yml
 
-#### NOTES:
+#### Specific Tasks NOTES:
 1/ You do not need a comma at the end of ${CommaDelimitedHOSTS}
 
 2/ proxy_squid.yml does NOT do HA nor load balancing ATM
+
+3/ auth2_client.yml MUST have SecondDomain defined
 
 ## License
 Free
