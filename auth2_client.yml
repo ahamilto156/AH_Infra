@@ -11,17 +11,14 @@
     - vars/auth2.yml
     - vars/IdM.yml
   tasks:
-    - name: IdM client - Confirm the installation of sssd
-      package:
-        name: 
-        - sssd
-        - sssd-client
-        - sssd-common
-        state: present
+    - name: IdM client - Installation of relevant packages
+    package:
+      name: "{{ packages }}"
+      state: present
 
     - name: IdM client - Set up sssd config. file = {{ sssd_conffile }}
       template:
-        src: "templates/auth2_client/IdM.conf.j2"
+        src: "templates/auth2_client/IdM_client/idm.conf.j2"
         dest: "{{ sssd_conffile }}"
         mode: 0640
         owner: sssd
@@ -30,11 +27,11 @@
         serole: object_r
         setype: sssd_t
 
-    - name: IdM client - Add IdM to /etc/sssd.conf
+    - name: IdM client - Add IdM to {{ sssd_baseconffile }}
       lineinfile:
         regexp: "^domains ="
         line: "domains = {{ SecondDomain }}"
-        dest: "/etc/sssd.conf"   
+        dest: "{{ sssd_baseconffile }}"   
       notify: restart_sssd
 
   handlers:
@@ -52,16 +49,12 @@
     - vars/auth2.yml
     - vars/LDAP.yml
   tasks:
-    - name: LDAP client - Confirm the installation of sssd
-      package:
-        name: 
-        - sssd
-        - sssd-client
-        - sssd-common
-        state: present
+    - name: LDAP client - Installation of relevant packages
+    package:
+      name: "{{ packages }}"
+      state: present
 
-    - debug:
-        msg: Make sure /etc/pki/tls/certs/ca-bundle.crt is there
+    # This assumes that /etc/pki/tls/certs/ca-bundle.crt has CA pem installed previously as we are just adding a second domain    
 
     - debug:
         msg: "basedir = {{ sssd_basedir }}, confdir = {{ sssd_confdir }} & conffile = {{ sssd_conffile }}"
@@ -69,7 +62,7 @@
     - name: LDAP client - Set up sssd config. file = {{ sssd_conffile }}
     ## Need to automate "ldap_search_base = dc=example,dc=com" in {{ sssd_conffile }}
       template:
-        src: "templates/auth2_client/LDAP.conf.j2"
+        src: "templates/auth2_client/LDAP_client/ldap.conf.j2"
         dest: "{{ sssd_conffile }}"
         mode: 0640
         owner: sssd
@@ -99,12 +92,13 @@
   vars_files:
     - vars/auth2.yml
     - vars/AD.yml
+    - vars/AD_vault.yml
   tasks:
     # - name: AD client - Use AD role
     #   import_role:
     #     name: ansible-role-adjoin
 
-  - name: AD client - Install packages
+  - name: AD client - Installation of relevant packages
     package:
       name: "{{ packages }}"
       state: present
@@ -118,41 +112,52 @@
       group: 'root'
     no_log: "{{ adjoin_no_log }}"
     loop:
-      - {src: 'ldap.conf.j2', dest: "{{ openldap_conffile }}"}
-      - {src: 'krb5.conf.j2', dest: '/etc/krb5.conf'}
+      - {src: "AD_client/ldap.conf.j2", dest: "/etc/openldap/ad_ldap.conf"}
+      - {src: "AD_client/krb5.conf.j2", dest: "/etc/krb5.conf"}
     loop_control:
       loop_var: 'conffile'
 
+  - name: AD client - Join {{ openldap_conffile_ad }} to {{ openldap_conffile_org }}
+    command: cat {{ openldap_conffile_ad }} >> {{ openldap_conffile_org }}
+
+  - name: AD client - Remove {{ openldap_conffile_ad }}
+    file:
+      dest: "{{ openldap_conffile_ad }}"
+      state: absent
+
+  - name: AD client - Configure Samba for home directories
+    template:
+      dest: "/etc/samba/smb_{{ SecondDomain }}.conf"
+      src: "AD_client/smb.conf.j2"
+      mode: 0644
+      owner: 'root'
+      group: 'root'
+    no_log: "{{ adjoin_no_log }}"
+
+  - block:
     - name: AD client - Check AD connection with testjoin
       command: "timeout 5 /usr/bin/net ads testjoin -s /etc/samba/smb_{{ SecondDomain }}.conf"
       changed_when: false
-      loop: "{{ adjoin_domains }}"
       no_log: "{{ adjoin_no_log }}"
-      loop_control:
-        loop_var: 'domain'
-
+  rescue:
     - name: AD client - Join AD domain
       command: '/usr/bin/net ads join -s /etc/samba/smb_{{ SecondDomain }}.conf \
-        -U{{ domain.username }}%{{ domain.password }} \
+        -U{{ vault_ADdomain.username }}%{{ vault_ADdomain.password }} \
         osName="{{ ansible_distribution }}" \
         osVer="{{ ansible_distribution_version }}" \
-        createcomputer={{ domain.computer_objects_path }}'
+        createcomputer={{ computer_objects_path }}'
       no_log: "{{ adjoin_no_log }}"
-      loop: "{{ adjoin_domains }}"
-      loop_control:
-        loop_var: 'domain'
 
   - name: AD client - Configure SSSD
     template:
       dest: "/etc/sssd/conf.d/{{ SecondDomain }}.conf"
-      src: "sssd.conf.j2"
+      src: "AD_client/sssd.conf.j2"
       mode: 0600
       owner: 'root'
       group: 'root'
     no_log: "{{ adjoin_no_log }}"
     notify:
       - reconfigure redhat pam
-      - reconfigure debian pam
       - clear sssd cache
 
   - name: AD client - Configure services - Common
@@ -168,6 +173,8 @@
     loop_control:
       loop_var: 'service'
 
+  ## The following will have to be detemined on a site-to-site basis
+  ## NOTE: The default for adjoin_configure_sudo is false
   - name: AD client - Configure Sudo permissions for admin users
     template:
       dest: "/etc/sudoers.d/10_linux_admins"
@@ -176,4 +183,4 @@
       validate: "visudo -cf %s"
       owner: 'root'
       group: 'root'
-    when: adjoin_configure_sudo
+    when: {{ adjoin_configure_sudo }}|bool

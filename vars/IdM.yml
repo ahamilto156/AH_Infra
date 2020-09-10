@@ -1,2 +1,5 @@
 ---
-# No additional vars required
+packages:
+  - 'sssd'
+  - 'oddjob-mkhomedir'
+  - 'authconfig'

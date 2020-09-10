@@ -1,4 +1,5 @@
 ---
 sssd_basedir: /etc/sssd
+sssd_baseconffile: "{{ sssd_basedir }}/sssd.conf"
 sssd_confdir: "{{ sssd_basedir }}/conf.d"
 sssd_conffile: "{{ sssd_confdir }}/00-{{ SecondDomain }}.conf"
