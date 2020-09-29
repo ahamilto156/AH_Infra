@@ -23,8 +23,11 @@ cd  .../AH_Infra/templates
 vim fwd.LAN.Net.Fwd.j2 rvs.LAN.Net.Fwd.j2     ###for resolution addresses
 
 ##  Variables
-[vars/main.yml](vars/main.yml)
-vim ../vars/main.yml                        ###for variables as used in ALL playbooks
+* [vars/main.yml](vars/main.yml) for variables as used in ALL playbooks
+* vars/*vault.yml                for vaults (Default password is ansible)
+### NOTE
+The following vaults have been deleted, but will need to be created by you
+* IdM_vault.yml
 
 ## Download roles
 cd  .../AH_Infra
@@ -64,7 +67,7 @@ ansible-playbook -kK --limit ${ipa_svr} ipa.yml
 ##### Configure DNS server
 ansible-playbook -kK --limit ${dns1},${dns2} dns.yml
 ##### Configure second authorisation domain client
-ansible-playbook -kK --limit ${server1},...,${serverx} -t IdM_client|LDAP_client|AD_client -e SecondDomain=${SecondDomain} auth2_client.yml
+ansible-playbook -kK --limit ${server1},...,${serverx} -t IdM_client|LDAP_client|AD_client -e SecondDomain=${SecondDomain}[,adjoin_configure_sudo=true] auth2_client.yml
 
 #### Specific Tasks NOTES:
 1/ You do not need a comma at the end of ${CommaDelimitedHOSTS}
