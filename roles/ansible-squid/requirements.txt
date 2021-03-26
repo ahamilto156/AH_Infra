@@ -118,7 +118,7 @@ python-gilt==1.2.3
     # via molecule
 python-slugify==4.0.1
     # via cookiecutter
-pyyaml==5.3.1
+pyyaml==5.4
     # via
     #   ansible
     #   ansible-lint
