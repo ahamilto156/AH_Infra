@@ -8,7 +8,7 @@ ansible-base==2.10.7
     # via ansible
 ansible-lint==4.2.0
     # via -r requirements.in
-ansible==2.10.0
+ansible==2.10.7
     # via
     #   -r requirements.in
     #   ansible-lint
