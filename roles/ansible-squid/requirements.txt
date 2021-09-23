@@ -4,15 +4,15 @@
 #
 #    pip-compile
 #
-ansible-base==2.10.7
-    # via ansible
-ansible-lint==4.2.0
-    # via -r requirements.in
-ansible==2.10.7
+ansible==4.2.0
     # via
     #   -r requirements.in
     #   ansible-lint
     #   molecule
+ansible-core==2.11.5
+    # via ansible
+ansible-lint==4.2.0
+    # via -r requirements.in
 arrow==0.15.8
     # via jinja2-time
 bcrypt==3.2.0
@@ -32,10 +32,6 @@ chardet==3.0.4
     # via
     #   binaryornot
     #   requests
-click-completion==0.5.2
-    # via molecule
-click-help-colors==0.8
-    # via molecule
 click==7.1.2
     # via
     #   click-completion
@@ -46,6 +42,10 @@ click==7.1.2
     #   nltk
     #   pip-tools
     #   python-gilt
+click-completion==0.5.2
+    # via molecule
+click-help-colors==0.8
+    # via molecule
 colorama==0.4.3
     # via
     #   molecule
@@ -54,7 +54,7 @@ cookiecutter==1.7.2
     # via molecule
 cryptography==3.3.2
     # via
-    #   ansible-base
+    #   ansible-core
     #   paramiko
 distro==1.5.0
     # via selinux
@@ -66,16 +66,16 @@ future==0.18.2
     # via lunr
 idna==2.10
     # via requests
-jinja2-time==0.2.0
-    # via cookiecutter
 jinja2==2.11.3
     # via
-    #   ansible-base
+    #   ansible-core
     #   click-completion
     #   cookiecutter
     #   jinja2-time
     #   mkdocs
     #   molecule
+jinja2-time==0.2.0
+    # via cookiecutter
 joblib==0.16.0
     # via nltk
 livereload==2.6.2
@@ -97,7 +97,7 @@ monotonic==1.5
 nltk==3.5
     # via lunr
 packaging==20.9
-    # via ansible-base
+    # via ansible-core
 paramiko==2.7.1
     # via molecule
 pathspec==0.8.0
@@ -126,7 +126,7 @@ python-slugify==4.0.1
     # via cookiecutter
 pyyaml==5.4
     # via
-    #   ansible-base
+    #   ansible-core
     #   ansible-lint
     #   mkdocs
     #   molecule
@@ -138,6 +138,8 @@ requests==2.24.0
     # via
     #   cookiecutter
     #   docker
+resolvelib==0.5.4
+    # via ansible-core
 ruamel.yaml==0.16.10
     # via ansible-lint
 selinux==0.2.1
