@@ -1,5 +1,0 @@
----
-- name: Install GPSd client
-  package:
-    name: gpsd-clients
-    state: present

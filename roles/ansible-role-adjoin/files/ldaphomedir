@@ -1,8 +1,0 @@
-Name: LDAP homedir
-Default: yes
-Priority: 128
-
-Session-Type: Additional
-Session-Interactive-Only: yes
-Session:
-	optional			pam_mkhomedir.so umask=0007 skel=/etc/skel
